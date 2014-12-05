@@ -1,0 +1,81 @@
+{namespace n=Tx_News_ViewHelpers}
+{namespace c=Cbrunet\CbNewscal\ViewHelpers}
+
+<f:layout name="General" />
+
+<f:section name="content">
+	<div class="newscal">
+	<table class="calendar">
+	<tr class="title">
+		<td class="left"><f:render section="navlink" arguments="{text: '«', demand: navigation.prev, uid: navigation.uid}"></f:render></td>
+		<th colspan="5">{f:translate(id: "month.{demand.month}", extensionName: "cb_newscal")} {demand.year}</th>
+		<td class="right"><f:render section="navlink" arguments="{text: '»', demand: navigation.next, uid: navigation.uid}"></f:render></td>
+	</tr>
+	<tr class="days">
+		<th><f:translate id="abbr.sunday" extensionName="cb_newscal">S</f:translate></th>
+		<th><f:translate id="abbr.monday" extensionName="cb_newscal">M</f:translate></th>
+		<th><f:translate id="abbr.tuesday" extensionName="cb_newscal">T</f:translate></th>
+		<th><f:translate id="abbr.wednesday" extensionName="cb_newscal">W</f:translate></th>
+		<th><f:translate id="abbr.thursday" extensionName="cb_newscal">T</f:translate></th>
+		<th><f:translate id="abbr.friday" extensionName="cb_newscal">F</f:translate></th>
+		<th><f:translate id="abbr.saturday" extensionName="cb_newscal">S</f:translate></th>
+	</tr>
+	<c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}">
+		<f:for each="{weeks}" as="week">
+			<tr>
+				<f:for each="{week}" as="day">
+					<f:render section="calday" arguments="{day:day, settings:settings}"></f:render>
+				</f:for>
+			</tr>
+		</f:for>
+	</c:calendar>
+	</table>
+	</div>
+</f:section>
+
+<f:section name="navlink">
+	<f:link.action arguments="{overwriteDemand:{year: demand.year, month: demand.month}}"
+	               title="{f:translate(id: 'month.{demand.month}', extensionName: 'cb_newscal')}"
+	               section="c{uid}">
+		{text}
+	</f:link.action>
+</f:section>
+
+<f:section name="calday">
+	<td class="{f:if(condition: '{day.curmonth}', then: 'curmonth', else: 'othermonth')}{f:if(condition: '{day.news}', then: ' hasevents')}">
+		<f:if condition="{day.news}"><f:then>
+			<f:render section="dayevents" arguments="{day:day, settings:settings}"></f:render>
+		</f:then>
+		<f:else>
+			{day.day}
+		</f:else>
+		</f:if>
+	</td>
+</f:section>
+
+<f:section name="dayevents">
+	<div class="eventday"><strong>{day.day}</strong>
+		<ul id="d{day.day}" class="events">
+			<f:for each="{day.news}" as="newsItem">
+				<li><n:link newsItem="{newsItem}" settings="{settings}">
+					{newsItem.title}
+				</n:link></li>
+			</f:for>
+		</ul>
+	</div>
+</f:section>
+
+<f:section name="fdayevents">
+	<f:comment>
+		If you are using Zurb Foundation, you can use this instead of 'dayevents' 
+		in 'calday' section, to render the events of each day using dropdowns.
+	</f:comment>
+	<a data-dropdown="d{day.day}" data-options="align:right;is_hover:true" aria-controls="d{day.day}" aria-expanded="false">{day.day}</a>
+	<ul id="d{day.day}" data-dropdown-content class="f-dropdown" aria-hidden="true" tabindex="-1">
+		<f:for each="{day.news}" as="newsItem">
+			<li><n:link newsItem="{newsItem}" settings="{settings}">
+				{newsItem.title}
+			</n:link></li>
+		</f:for>
+	</ul>
+</f:section>

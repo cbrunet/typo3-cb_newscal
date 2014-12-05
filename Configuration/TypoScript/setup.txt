@@ -1,0 +1,16 @@
+
+config.tx_extbase {
+    objects {
+        Tx_News_Controller_NewscalController.className = \Cbrunet\CbNewscal\Controller\NewscalController
+    }
+}
+
+plugin.tx_news {
+	view {
+		templateRootPaths.99 = EXT:cb_newscal/Resources/Private/Templates/
+		partialRootPaths.99 = EXT:cb_newscal/Resources/Private/Partials/
+		layoutRootPaths.99 = EXT:cb_newscal/Resources/Private/Layouts/
+	}
+}
+
+page.includeCSS.tx_cbnewscal = EXT:cb_newscal/Resources/Public/Css/newscal.css
