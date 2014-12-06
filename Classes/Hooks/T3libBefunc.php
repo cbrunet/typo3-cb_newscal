@@ -1,25 +1,20 @@
 <?php
 
-/**
- * Remove unused fields in the flexform.
- */
-function updateFlexforms(&$params, &$reference) {
-	if ($params['selectedView'] == 'Newscal->calendar') {
-		$removedFields = array(
-			'sDEF' => 'orderBy,orderDirection,timeRestriction,timeRestrictionHigh,singleNews',
-			'additional' => 'limit,offset,topNewsFirst,hidePagination,excludeAlreadyDisplayedNews,disableOverrideDemand',
-			'template' => '',
-		);
-		deleteFromStructure($params['dataStructure'], $removedFields);
-	}
-}
+namespace Cbrunet\CbNewscal\Hooks;
 
-function deleteFromStructure(array &$dataStructure, array $fieldsToBeRemoved) {
-	foreach ($fieldsToBeRemoved as $sheetName => $sheetFields) {
-		$fieldsInSheet = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $sheetFields, TRUE);
+class T3libBefunc extends \Tx_News_Hooks_T3libBefunc {
 
-		foreach ($fieldsInSheet as $fieldName) {
-			unset($dataStructure['sheets'][$sheetName]['ROOT']['el']['settings.' . $fieldName]);
+	/**
+	 * Remove unused fields in the flexform.
+	 */
+	public function updateFlexforms(&$params, &$reference) {
+		if ($params['selectedView'] == 'Newscal->calendar') {
+			$removedFields = array(
+				'sDEF' => 'orderBy,orderDirection,timeRestriction,timeRestrictionHigh,singleNews',
+				'additional' => 'limit,offset,topNewsFirst,hidePagination,excludeAlreadyDisplayedNews,disableOverrideDemand',
+				'template' => '',
+			);
+			$this->deleteFromStructure($params['dataStructure'], $removedFields);
 		}
 	}
 }

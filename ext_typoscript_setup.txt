@@ -1,0 +1,5 @@
+config.tx_extbase {
+    objects {
+        Tx_News_Controller_NewscalController.className = \Cbrunet\CbNewscal\Controller\NewscalController
+    }
+}

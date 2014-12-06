@@ -6,21 +6,21 @@
 <f:section name="content">
 	<div class="newscal">
 	<table class="calendar">
-	<tr class="title">
-		<td class="left"><f:render section="navlink" arguments="{text: '«', demand: navigation.prev, uid: navigation.uid}"></f:render></td>
-		<th colspan="5">{f:translate(id: "month.{demand.month}", extensionName: "cb_newscal")} {demand.year}</th>
-		<td class="right"><f:render section="navlink" arguments="{text: '»', demand: navigation.next, uid: navigation.uid}"></f:render></td>
-	</tr>
-	<tr class="days">
-		<th><f:translate id="abbr.sunday" extensionName="cb_newscal">S</f:translate></th>
-		<th><f:translate id="abbr.monday" extensionName="cb_newscal">M</f:translate></th>
-		<th><f:translate id="abbr.tuesday" extensionName="cb_newscal">T</f:translate></th>
-		<th><f:translate id="abbr.wednesday" extensionName="cb_newscal">W</f:translate></th>
-		<th><f:translate id="abbr.thursday" extensionName="cb_newscal">T</f:translate></th>
-		<th><f:translate id="abbr.friday" extensionName="cb_newscal">F</f:translate></th>
-		<th><f:translate id="abbr.saturday" extensionName="cb_newscal">S</f:translate></th>
-	</tr>
 	<c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}">
+		<tr class="title">
+			<td class="left"><f:render section="navlink" arguments="{text: '«', month: prevMonth, year: prevYear, uid: uid}"></f:render></td>
+			<th colspan="5">{f:translate(id: "month.{demand.month}", extensionName: "cb_newscal")} {demand.year}</th>
+			<td class="right"><f:render section="navlink" arguments="{text: '»', month: nextMonth, year: nextYear, uid: uid}"></f:render></td>
+		</tr>
+		<tr class="days">
+			<th><f:translate id="abbr.sunday" extensionName="cb_newscal">S</f:translate></th>
+			<th><f:translate id="abbr.monday" extensionName="cb_newscal">M</f:translate></th>
+			<th><f:translate id="abbr.tuesday" extensionName="cb_newscal">T</f:translate></th>
+			<th><f:translate id="abbr.wednesday" extensionName="cb_newscal">W</f:translate></th>
+			<th><f:translate id="abbr.thursday" extensionName="cb_newscal">T</f:translate></th>
+			<th><f:translate id="abbr.friday" extensionName="cb_newscal">F</f:translate></th>
+			<th><f:translate id="abbr.saturday" extensionName="cb_newscal">S</f:translate></th>
+		</tr>
 		<f:for each="{weeks}" as="week">
 			<tr>
 				<f:for each="{week}" as="day">
@@ -34,8 +34,8 @@
 </f:section>
 
 <f:section name="navlink">
-	<f:link.action arguments="{overwriteDemand:{year: demand.year, month: demand.month}}"
-	               title="{f:translate(id: 'month.{demand.month}', extensionName: 'cb_newscal')}"
+	<f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
+	               title="{f:translate(id: 'month.{month}', extensionName: 'cb_newscal')}"
 	               section="c{uid}">
 		{text}
 	</f:link.action>

@@ -12,8 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Calendar for news',
-	'description' => 'Display news or news events as a calendar.',
-	'category' => 'plugin',
+	'description' => 'Display news as calendar of the month.',
 	'author' => 'Charles Brunet',
 	'author_email' => 'charles@cbrunet.net',
 	'state' => 'alpha',
