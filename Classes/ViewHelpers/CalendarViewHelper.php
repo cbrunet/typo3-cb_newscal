@@ -55,10 +55,10 @@ class CalendarViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHe
 		}
 
 		$prevdate = mktime(0, 0, 0, $month, -1, $year);
-		$prevMonth = date('n', $prevdate);
+		$prevMonth = date('m', $prevdate);
 		$prevYear = date('Y', $prevdate);
 		$nextdate = mktime(0, 0, 0, $month, 32, $year);
-		$nextMonth = date('n', $nextdate);
+		$nextMonth = date('m', $nextdate);
 		$nextYear = date('Y', $nextdate);
 
 		$this->templateVariableContainer->add('weeks', $weeks);

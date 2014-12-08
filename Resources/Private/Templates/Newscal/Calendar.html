@@ -9,17 +9,17 @@
 	<c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}">
 		<tr class="title">
 			<td class="left"><f:render section="navlink" arguments="{text: '«', month: prevMonth, year: prevYear, uid: uid}"></f:render></td>
-			<th colspan="5">{f:translate(id: "month.{demand.month}", extensionName: "cb_newscal")} {demand.year}</th>
+			<th colspan="5"><f:translate id="month.<f:format.printf arguments='{0: demand.month}'>%02d</f:format.printf>" extensionName="news"></f:translate> {demand.year}</th>
 			<td class="right"><f:render section="navlink" arguments="{text: '»', month: nextMonth, year: nextYear, uid: uid}"></f:render></td>
 		</tr>
 		<tr class="days">
-			<th><f:translate id="abbr.sunday" extensionName="cb_newscal">S</f:translate></th>
-			<th><f:translate id="abbr.monday" extensionName="cb_newscal">M</f:translate></th>
-			<th><f:translate id="abbr.tuesday" extensionName="cb_newscal">T</f:translate></th>
-			<th><f:translate id="abbr.wednesday" extensionName="cb_newscal">W</f:translate></th>
-			<th><f:translate id="abbr.thursday" extensionName="cb_newscal">T</f:translate></th>
-			<th><f:translate id="abbr.friday" extensionName="cb_newscal">F</f:translate></th>
-			<th><f:translate id="abbr.saturday" extensionName="cb_newscal">S</f:translate></th>
+			<f:for each="{weeks.0}" as="day">
+				<th>
+					<c:firstChar>
+						<f:translate id="day.{f:format.date(date: day.ts, format: 'N')}" extensionName="news"></f:translate>
+					</c:firstChar>
+				</th>
+			</f:for>
 		</tr>
 		<f:for each="{weeks}" as="week">
 			<tr>
@@ -35,7 +35,7 @@
 
 <f:section name="navlink">
 	<f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
-	               title="{f:translate(id: 'month.{month}', extensionName: 'cb_newscal')}"
+	               title="{f:translate(id: 'month.{month}', extensionName: 'news')}"
 	               section="c{uid}">
 		{text}
 	</f:link.action>
