@@ -15,6 +15,8 @@ class T3libBefunc extends \Tx_News_Hooks_T3libBefunc {
 				'template' => '',
 			);
 			$this->deleteFromStructure($params['dataStructure'], $removedFields);
+			$params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][] = array('LLL:EXT:news/Resources/Private/Language/locallang_be.xml:flexforms_general.orderBy.tstamp', 'tstamp');
+			$params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][] = array('LLL:EXT:news/Resources/Private/Language/locallang_be.xml:flexforms_general.orderBy.crdate', 'crdate');
 		}
 	}
 }
