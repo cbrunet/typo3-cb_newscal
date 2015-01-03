@@ -1,0 +1,149 @@
+﻿.. ==================================================
+.. FOR YOUR INFORMATION
+.. --------------------------------------------------
+.. -*- coding: utf-8 -*- with BOM.
+
+.. include:: ../Includes.txt
+
+
+.. _admin-manual:
+
+Administrator Manual
+====================
+
+
+
+.. _admin-installation:
+
+Installation
+------------
+
+This extension requires the news_ extension, as it extends it.
+After installing the extension in the Extension Manager,
+you should include the static template *Calendar for news*.
+
+
+
+.. _admin-configuration:
+
+Configuration
+-------------
+
+TypoScript constants
+^^^^^^^^^^^^^^^^^^^^
+
+Paths to Fluid templates are defined in TypoScript constants. However, a better way to customize templates
+is to add additional paths to *plugin.tx_news.view.templateRootPaths* array.
+
+plugin.tx_cbnewscal.view.templateRootPath
+  Path to Fluid templates.
+plugin.tx_cbnewscal.view.partialRootPath
+  Path to Fluid partials
+plugin.tx_cbnewscal.view.layoutRootPath
+  Path to Fluid layouts
+
+TypoScript setup
+^^^^^^^^^^^^^^^^
+
+Default CSS stylesheet is included through *page.includeCSS.tx_cbnewscal*. 
+
+
+
+Customizing templates
+---------------------
+
+The easiest way to customize the template used for rendering the calendar is
+to specify an additional path in the *plugin.tx_news.view.templateRootPaths*
+array. Array item 100 is the default template path for the news_ extension,
+and array item 99 is the default template path for cb_calnews extension.
+Therefore, items with index greater than 100 will replace defined paths. Under
+the news specified path, the used template should be called *Calendar.html*
+and located inside the *Newscal* folder.
+
+As with the news_ extension, it is possible to define different templates
+using the *tx_news.templateLayouts* array in PageTSConfig. Those templates
+are then accessible through the plugin configuration in the backend.
+In the Fluid template, the template number is given by the *{settings.templateLayout}*
+variable.
+
+It is possible to replace the used CSS stylesheet by modifying the path inside
+*page.includeCSS.tx_cbnewscal* TypoScript setup.
+
+
+ViewHelpers
+-----------
+
+ViewHelpers are located under the *Cbrunet\CbNewscal\ViewHelpers* namespace.
+
+Calendar
+^^^^^^^^
+
+This ViewHelper provides an array used to iterate through weeks and days of the given month.
+
+
+.. code-block:: html
+
+   {namespace c=Cbrunet\CbNewscal\ViewHelpers}
+
+   <c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}">
+
+   </c:calendar>
+
+
+Arguments
+"""""""""
+
+newsList
+  The list of news to display.
+year
+  (optional) The year to display. If not specified, the current year is used.
+month
+  (optional) The month to display. If not specified, the current month is used.
+
+
+Variables inside the ViewHelper
+"""""""""""""""""""""""""""""""
+
+The following variables are accessible inside the ViewHelper.
+
+weeks
+  The array of the weeks. Each item is an array of the days of the week.
+weeks.*0*.ts
+  Timestamp corresponding to the day.
+weeks.*0*.day
+  Day of the month
+weeks.*0*.month
+  Month for this day (1 - 12).
+weeks.*0*.curmonth
+  True is the day belongs to the current month, false otherwise.
+weeks.*0*.news
+  Array of the news related to the current day.
+prevMonth
+  Number of the previous month (1 - 12)
+prevYear
+  Year of the previous month
+nextMonth
+  Number of the next month (1 - 12)
+nextYear
+  Year of the next month
+
+
+FirstChar
+^^^^^^^^^
+
+Returns the first char of the provided string. Used for rendering the first letter of the day of the week.
+
+.. code-block:: html
+
+   {namespace c=Cbrunet\CbNewscal\ViewHelpers}
+
+   <c:firstChar>
+     <f:translate id="day.{f:format.date(date: day.ts, format: 'N')}" extensionName="news"></f:translate>
+   </c:firstChar>
+
+
+
+
+
+
+.. _news: http://typo3.org/extensions/repository/view/news

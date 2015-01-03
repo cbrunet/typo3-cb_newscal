@@ -23,13 +23,13 @@ Calendar for news
 		en
 
 	:Description:
-		Display news or news events as a calendar.
+		Provides a calendar view to news.
 
 	:Keywords:
-		comma,separated,list,of,keywords
+		news,calendar
 
 	:Copyright:
-		2014
+		2015
 
 	:Author:
 		Charles Brunet
@@ -57,9 +57,6 @@ Calendar for news
 	Introduction/Index
 	User/Index
 	Administrator/Index
-	Configuration/Index
-	Developer/Index
 	KnownProblems/Index
-	ToDoList/Index
 	ChangeLog/Index
 	Targets
