@@ -32,6 +32,10 @@ Configuration
 TypoScript constants
 ^^^^^^^^^^^^^^^^^^^^
 
+plugin.tx_cbnewscal.settings.firstDayOfWeek
+  0 to begin the week on Sunday, 1 to begin the week on Monday
+
+
 Paths to Fluid templates are defined in TypoScript constants. However, a better way to customize templates
 is to add additional paths to *plugin.tx_news.view.templateRootPaths* array.
 
@@ -85,7 +89,8 @@ This ViewHelper provides an array used to iterate through weeks and days of the 
 
    {namespace c=Cbrunet\CbNewscal\ViewHelpers}
 
-   <c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}">
+   <c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}"
+               firstDayOfWeek="{settings.firstDayOfWeek}">
 
    </c:calendar>
 
@@ -99,6 +104,8 @@ year
   (optional) The year to display. If not specified, the current year is used.
 month
   (optional) The month to display. If not specified, the current month is used.
+firstDayOfWeek
+  (optional) The first day of the week (0 for Sunday, 1 for Monday; default: 0).
 
 
 Variables inside the ViewHelper

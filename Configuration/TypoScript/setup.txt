@@ -5,6 +5,9 @@ plugin.tx_news {
 		partialRootPaths.99 = EXT:cb_newscal/Resources/Private/Partials/
 		layoutRootPaths.99 = EXT:cb_newscal/Resources/Private/Layouts/
 	}
+	settings {
+        firstDayOfWeek = {$plugin.tx_cbnewscal.settings.firstDayOfWeek}
+    }
 }
 
 page.includeCSS.tx_cbnewscal = EXT:cb_newscal/Resources/Public/Css/newscal.css

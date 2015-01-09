@@ -6,7 +6,8 @@
 <f:section name="content">
 	<div class="newscal">
 	<table class="calendar">
-	<c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}">
+	<c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}"
+	            firstDayOfWeek="{settings.firstDayOfWeek}">
 		<tr class="title">
 			<td class="left"><f:render section="navlink" arguments="{text: '«', month: prevMonth, year: prevYear, uid: uid}"></f:render></td>
 			<th colspan="5"><f:translate id="month.<f:format.printf arguments='{0: demand.month}'>%02d</f:format.printf>" extensionName="news"></f:translate> {demand.year}</th>

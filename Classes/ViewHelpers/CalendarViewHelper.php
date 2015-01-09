@@ -8,9 +8,10 @@ class CalendarViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHe
 	 * @param array $newsList 
 	 * @param int $month 
 	 * @param int $year 
+	 * @param int $firstDayOfWeek 0 for Sunday, 1 for Monday
 	 * @return string Rendered result
 	 */
-	public function render($newsList, $month=NULL, $year=NULL) {
+	public function render($newsList, $month=NULL, $year=NULL, $firstDayOfWeek=0) {
 		if ($year === NULL) {
 			$year = date('Y');
 		}
@@ -21,15 +22,15 @@ class CalendarViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHe
 		}
 		$month = (int)$month;
 
-		$fdom = mktime(0, 0, 0, $month, 1, $year);
-		$fdow = (int)date('w', $fdom);
+		$fdom = mktime(0, 0, 0, $month, 1, $year);  // First day of the month
+		$fdow = (int)date('w', $fdom);  // Day of week of the first day
 
-		$ldom = mktime(0, 0, 0, $month, (int)date('t'), $year);
-		$ldow = (int)date('w', $ldom);
+		$ldom = mktime(0, 0, 0, $month, (int)date('t'), $year);  // Last day of the month
+		$ldow = (int)date('w', $ldom);  // Day of week of the last day
 
-		$now = (int)date('W', $ldow) - (int)date('W', $fdow) + 1;
-		$fd = 1 - $fdow;
-		$ld = (int)date('t') + 6 - $ldow;
+		$now = (int)date('W', $ldow) - (int)date('W', $fdow) + 1;  // Number of weeks
+		$fd = 1 - $fdow + $firstDayOfWeek;  // First day of the calendar
+		$ld = (int)date('t') + 6 - $ldow + $firstDayOfWeek;  // Last day of the calendar
 		
 		$weeks = [];
 		while ($fd < $ld) {
