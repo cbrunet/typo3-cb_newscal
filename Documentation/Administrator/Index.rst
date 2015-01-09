@@ -125,14 +125,55 @@ weeks.*0*.curmonth
   True is the day belongs to the current month, false otherwise.
 weeks.*0*.news
   Array of the news related to the current day.
-prevMonth
-  Number of the previous month (1 - 12)
-prevYear
-  Year of the previous month
-nextMonth
-  Number of the next month (1 - 12)
-nextYear
-  Year of the next month
+
+
+OffsetMonth
+^^^^^^^^^^^
+
+This ViewHelper allow to calculate month and year corresponding to *offset* months
+before or after the current month. 
+
+Arguments
+"""""""""
+
+year
+  Current year.
+month
+  Current month.
+offset
+  Number of months to offset. Positive number for months after, negative number for months before.
+  For instance, offset = 1 is the next month, and offset = -1 is the previous month.
+
+Variables inside the ViewHelper
+"""""""""""""""""""""""""""""""
+
+The following variables are accessible inside the ViewHelper.
+
+month
+  Offset month.
+year
+  Offset year.
+
+Example
+"""""""
+.. code-block:: html
+
+   {namespace c=Cbrunet\CbNewscal\ViewHelpers}
+
+    <c:offsetMonth month="{demand.month}" year="{demand.year}" offset="-1">
+      <f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
+                     title="{f:translate(id: 'month.{month}', extensionName: 'news')} {year}"
+                     section="c{uid}">
+        Previous month
+      </f:link.action>
+    </c:offsetMonth>
+    <c:offsetMonth month="{demand.month}" year="{demand.year}" offset="1">
+      <f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
+                     title="{f:translate(id: 'month.{month}', extensionName: 'news')} {year}"
+                     section="c{uid}">
+        Next month
+      </f:link.action>
+    </c:offsetMonth>
 
 
 FirstChar

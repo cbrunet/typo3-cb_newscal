@@ -9,9 +9,13 @@
 	<c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}"
 	            firstDayOfWeek="{settings.firstDayOfWeek}">
 		<tr class="title">
-			<td class="left"><f:render section="navlink" arguments="{text: '«', month: prevMonth, year: prevYear, uid: uid}"></f:render></td>
+			<c:offsetMonth month="{demand.month}" year="{demand.year}" offset="-1">
+				<td class="left"><f:render section="navlink" arguments="{text: '«', month: month, year: year, uid: uid}"></f:render></td>
+			</c:offsetMonth>
 			<th colspan="5"><f:translate id="month.<f:format.printf arguments='{0: demand.month}'>%02d</f:format.printf>" extensionName="news"></f:translate> {demand.year}</th>
-			<td class="right"><f:render section="navlink" arguments="{text: '»', month: nextMonth, year: nextYear, uid: uid}"></f:render></td>
+			<c:offsetMonth month="{demand.month}" year="{demand.year}" offset="1">
+				<td class="right"><f:render section="navlink" arguments="{text: '»', month: month, year: year, uid: uid}"></f:render></td>
+			</c:offsetMonth>
 		</tr>
 		<tr class="days">
 			<f:for each="{weeks.0}" as="day">
@@ -36,7 +40,7 @@
 
 <f:section name="navlink">
 	<f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
-	               title="{f:translate(id: 'month.{month}', extensionName: 'news')}"
+	               title="{f:translate(id: 'month.{month}', extensionName: 'news')} {year}"
 	               section="c{uid}">
 		{text}
 	</f:link.action>
