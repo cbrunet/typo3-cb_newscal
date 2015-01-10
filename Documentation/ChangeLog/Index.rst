@@ -12,8 +12,11 @@ ChangeLog
 =========
 
 1.1.0:
-  - Option to specify if the first day of the week is Sunday or Monday
+  - Option to specify if the first day of the week is Sunday or Monday [`issue 1`_]
+  - Option to display a specific month [`issue 3`_]
 
 1.0.0: 2015-01-03
   Initial release
 
+.. _issue 1: https://github.com/cbrunet/typo3-cb_newscal/issues/1
+.. _issue 3: https://github.com/cbrunet/typo3-cb_newscal/issues/3
