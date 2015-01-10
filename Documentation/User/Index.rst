@@ -34,7 +34,10 @@ Most of the available options are the same than options of the news_ extension.
 Please refer to the `manual of news extension`_ for more details.
 We only detail options that are specific for the calendar:
 
-
+Month to display
+  Keep this field empty to display calendar of the current month.
+  If you put a date in yyyy-aa format (e.g. 2014-01), this specific month will be displayed.
+  If you put a number prefixed with + or - (e.g. +1 or -2), it will offset the current month with that value.
 Date field to use
   This determines which date field is used for displaying news into the calendar.
 
