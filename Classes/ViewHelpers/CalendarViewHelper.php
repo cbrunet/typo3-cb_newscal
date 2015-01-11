@@ -25,15 +25,14 @@ class CalendarViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHe
 		$fdom = mktime(0, 0, 0, $month, 1, $year);  // First day of the month
 		$fdow = (int)date('w', $fdom);  // Day of week of the first day
 
-		$ldom = mktime(0, 0, 0, $month, (int)date('t'), $year);  // Last day of the month
-		$ldow = (int)date('w', $ldom);  // Day of week of the last day
-
-		$now = (int)date('W', $ldow) - (int)date('W', $fdow) + 1;  // Number of weeks
 		$fd = 1 - $fdow + $firstDayOfWeek;  // First day of the calendar
-		$ld = (int)date('t') + 6 - $ldow + $firstDayOfWeek;  // Last day of the calendar
+		$ld = (int)date('t', $fdom);  // Last day of the month
+		if ($fd > 1) {
+			$fd -= 7;
+		}
 		
 		$weeks = [];
-		while ($fd < $ld) {
+		while ($fd <= $ld) {
 			$week = array();
 			for ($d=0; $d<7; $d++) {
 				$day = array();
