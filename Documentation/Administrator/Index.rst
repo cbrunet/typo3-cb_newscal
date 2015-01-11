@@ -74,6 +74,32 @@ It is possible to replace the used CSS stylesheet by modifying the path inside
 *page.includeCSS.tx_cbnewscal* TypoScript setup.
 
 
+Variables given to the template
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following variables are accessible from the Fluid template.
+
+settings
+  The array of settings, configured in TypoScript or in the plugin flexform.
+calendars
+  The list of calendars to display.
+demand
+  The news demand object for the plugin.
+uid
+  uid of the displayed plugin content object.
+
+
+Each calendar in the *calendars* array contains the following variables:
+
+news
+  The list of news to display.
+demand
+  The news demand object for the current calendar.
+curmonth
+  A boolean value that is TRUE if the calendar is the one specified by the demand object.
+  It is FALSE for calendars of the other months, that are before or after the current month.
+
+
 ViewHelpers
 -----------
 

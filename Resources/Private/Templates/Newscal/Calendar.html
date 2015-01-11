@@ -5,82 +5,26 @@
 
 <f:section name="content">
 	<div class="newscal">
-	<table class="calendar">
-	<c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}"
-	            firstDayOfWeek="{settings.firstDayOfWeek}">
-		<tr class="title">
+		<f:if condition="{settings.hidePagination} == 0">
 			<c:offsetMonth month="{demand.month}" year="{demand.year}" offset="-1">
-				<td class="left"><f:render section="navlink" arguments="{text: '«', month: month, year: year, uid: uid}"></f:render></td>
+				<f:render section="navlink" arguments="{text: '◀', month: month, year: year, uid: uid, class:'left'}"></f:render>
 			</c:offsetMonth>
-			<th colspan="5"><f:translate id="month.<f:format.printf arguments='{0: demand.month}'>%02d</f:format.printf>" extensionName="news"></f:translate> {demand.year}</th>
 			<c:offsetMonth month="{demand.month}" year="{demand.year}" offset="1">
-				<td class="right"><f:render section="navlink" arguments="{text: '»', month: month, year: year, uid: uid}"></f:render></td>
+				<f:render section="navlink" arguments="{text: '▶', month: month, year: year, uid: uid, class:'right'}"></f:render>
 			</c:offsetMonth>
-		</tr>
-		<tr class="days">
-			<f:for each="{weeks.0}" as="day">
-				<th>
-					<c:firstChar>
-						<f:translate id="day.{f:format.date(date: day.ts, format: 'N')}" extensionName="news"></f:translate>
-					</c:firstChar>
-				</th>
-			</f:for>
-		</tr>
-		<f:for each="{weeks}" as="week">
-			<tr>
-				<f:for each="{week}" as="day">
-					<f:render section="calday" arguments="{day:day, settings:settings}"></f:render>
-				</f:for>
-			</tr>
+		</f:if>
+		<f:for each="{calendars}" as="calendar" iteration="iteration">
+			<f:render partial="Newscal/Calendar" arguments="{news:calendar.news, demand:calendar.demand, uid:uid, settings:settings, iteration:iteration}"></f:render>
 		</f:for>
-	</c:calendar>
-	</table>
 	</div>
 </f:section>
+
 
 <f:section name="navlink">
 	<f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
 	               title="{f:translate(id: 'month.{month}', extensionName: 'news')} {year}"
-	               section="c{uid}">
+	               section="c{uid}"
+	               class="{class}">
 		{text}
 	</f:link.action>
-</f:section>
-
-<f:section name="calday">
-	<td class="{f:if(condition: '{day.curmonth}', then: 'curmonth', else: 'othermonth')}{f:if(condition: '{day.news}', then: ' hasevents')}">
-		<f:if condition="{day.news}"><f:then>
-			<f:render section="dayevents" arguments="{day:day, settings:settings}"></f:render>
-		</f:then>
-		<f:else>
-			{day.day}
-		</f:else>
-		</f:if>
-	</td>
-</f:section>
-
-<f:section name="dayevents">
-	<div class="eventday"><strong>{day.day}</strong>
-		<ul id="d{day.day}" class="events">
-			<f:for each="{day.news}" as="newsItem">
-				<li><n:link newsItem="{newsItem}" settings="{settings}">
-					{newsItem.title}
-				</n:link></li>
-			</f:for>
-		</ul>
-	</div>
-</f:section>
-
-<f:section name="fdayevents">
-	<f:comment>
-		If you are using Zurb Foundation, you can use this instead of 'dayevents' 
-		in 'calday' section, to render the events of each day using dropdowns.
-	</f:comment>
-	<a data-dropdown="d{day.day}" data-options="align:right;is_hover:true" aria-controls="d{day.day}" aria-expanded="false">{day.day}</a>
-	<ul id="d{day.day}" data-dropdown-content class="f-dropdown" aria-hidden="true" tabindex="-1">
-		<f:for each="{day.news}" as="newsItem">
-			<li><n:link newsItem="{newsItem}" settings="{settings}">
-				{newsItem.title}
-			</n:link></li>
-		</f:for>
-	</ul>
 </f:section>

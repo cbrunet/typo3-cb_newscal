@@ -40,6 +40,10 @@ Month to display
   If you put a number prefixed with + or - (e.g. +1 or -2), it will offset the current month with that value.
 Date field to use
   This determines which date field is used for displaying news into the calendar.
+Months to display before
+Months to display after
+  Number of additional months to display before and after the displayed month.
+  For example, if you want to display the current month and the next month, put 1 into *Months to display after*.
 
 
 The plugin displays the calendar of the current month. If month and year are given in the page url,
@@ -49,7 +53,7 @@ next or previous month, the displayed month and year will be reflected in the pa
 .. important::
 
    If other *news* plugin are displayed inside the same page, be careful about the
-   *Disable override demand* option. If it is unchecked, only news of the selected
+   *Disable override demand* option of the other plugins. If it is unchecked, only news of the selected
    month will be displayed. Be sure to check this option if you want to display all
    the news, whether they belong to the displayed calendar or not.
 

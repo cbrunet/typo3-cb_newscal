@@ -35,15 +35,24 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 			$this->adjustDemand($demand);  // Use settings.displayMonth only if no demand object
 		}
 
+		$monthsBefore = (int)$this->settings['monthsBefore'];
+		$monthsAfter = (int)$this->settings['monthsAfter'];
+		$calendars = array();
+
+		for ($month = $demand->getMonth() - $monthsBefore; $month <= $demand->getMonth() + $monthsAfter; $month++) {
+			$cm = mktime(0, 0, 0, $month, 1, $demand->getYear());
+			$curdemand = clone $demand;
+			$curdemand->setYear((int)date('Y', $cm));
+			$curdemand->setMonth((int)date('n', $cm));
+			$newsRecords = $this->newsRepository->findDemanded($curdemand);
+			$calendars[] = array('news' => $newsRecords, 'demand' => $curdemand, 'curmonth' => $month == $demand->getMonth()?1:0);
+		}
 
 		$this->contentObj = $this->configurationManager->getContentObject();
 		$uid = $this->contentObj->data['uid'];
 
-		$newsRecords = $this->newsRepository->findDemanded($demand);
-
 		$this->view->assignMultiple(array(
-			'news' => $newsRecords,
-			'overwriteDemand' => $overwriteDemand,
+			'calendars' => $calendars,
 			'demand' => $demand,
 			'uid' => $uid,
 		));

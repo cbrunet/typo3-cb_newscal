@@ -5,7 +5,12 @@
 		<body>
 			<trans-unit id="flexforms_general.displayMonth" xml:space="preserve">
                 <source>Month to display (empty for current month, yyyy-mm for specific month, or +n or -n for relative offset)</source>
-                <target>Mois à affiche (vide pour le mois courant, aaaa-mm pour un mois spécifique, ou +n ou -n pour un décalage relatif)</target>
+            </trans-unit>
+			<trans-unit id="flexforms_general.monthsBefore" xml:space="preserve">
+                <source>Months to display before</source>
+            </trans-unit>
+			<trans-unit id="flexforms_general.monthsAfter" xml:space="preserve">
+                <source>Months to display after</source>
             </trans-unit>
 		</body>
 	</file>
