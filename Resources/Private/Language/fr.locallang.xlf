@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2014-12-02T14:53:53Z" product-name="cb_newscal">
+		<header/>
+		<body>
+			<trans-unit id="day.1.abbr" xml:space="preserve">
+				<source>Mo</source>
+				<target>Lu</target>
+			</trans-unit>
+			<trans-unit id="day.2.abbr" xml:space="preserve">
+				<source>Tu</source>
+				<target>Ma</target>
+			</trans-unit>
+			<trans-unit id="day.3.abbr" xml:space="preserve">
+				<source>We</source>
+				<target>Me</target>
+			</trans-unit>
+			<trans-unit id="day.4.abbr" xml:space="preserve">
+				<source>Th</source>
+				<target>Je</target>
+			</trans-unit>
+			<trans-unit id="day.5.abbr" xml:space="preserve">
+				<source>Fr</source>
+				<target>Ve</target>
+			</trans-unit>
+			<trans-unit id="day.6.abbr" xml:space="preserve">
+				<source>Sa</source>
+				<target>Sa</target>
+			</trans-unit>
+			<trans-unit id="day.7.abbr" xml:space="preserve">
+				<source>Su</source>
+				<target>Di</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

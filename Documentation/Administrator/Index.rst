@@ -202,22 +202,31 @@ Example
     </c:offsetMonth>
 
 
-FirstChar
-^^^^^^^^^
+Internationalization
+--------------------
 
-Returns the first char of the provided string. Used for rendering the first letter of the day of the week.
+Translations for this extension are stored in xlf files, just like other TYPO3 extensions.
+However, many strings a taken directly from the news_ extension, while a few specific strings
+are stored in the cb_newscal extension.
 
-.. code-block:: html
+Extension is written in English, and French translations are provided. 
 
-   {namespace c=Cbrunet\CbNewscal\ViewHelpers}
+To replace default provided translations, or to provide your own translations,
+simply copy the needed files that are located in `Resources/Private/Language/`
+to a readable location, modify the files as you need, and provide the path
+to those files in the `$GLOBALS['TYPO/_CONF_VARS']` variable. This variable can
+be modified, either in the `typo3conf/AdditionalConfiguration.php` file for a local
+TYPO3 installation, or in the `ext_localconf.php` file if you include them in
+a custom extension.
 
-   <c:firstChar>
-     <f:translate id="day.{f:format.date(date: day.ts, format: 'N')}" extensionName="news"></f:translate>
-   </c:firstChar>
+The syntax to override translation files is like:
 
+.. code-block:: php
 
+  $GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride']['EXT:cb_newscal/Resources/Private/Language/locallang.xlf'][] = 'path/to/locallang.xlf';
+  $GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride']['fr']['EXT:cb_newscal/Resources/Private/Language/locallang.xlf'][] = 'other/path/to/fr.locallang.xlf';
 
-
-
+See `Xavier Perseguers blog`_ for more details about translations in TYPO3.
 
 .. _news: http://typo3.org/extensions/repository/view/news
+.. _Xavier Perseguers blog: http://xavier.perseguers.ch/tutoriels/typo3/articles/managing-localization-files.html#c962

@@ -16,10 +16,20 @@ ChangeLog
   - Options to display more than one months [`issue 2`_]
   - Option to display a specific month [`issue 3`_]
   - Enabled the *Hide the pagination* option in plugin settings
+  - Use translations for abbreviated days of week, instead of simply stripping the long name,
+    for better internationalization.
 
 1.0.0: 2015-01-03
-  Initial release
+  - Initial release
 
 .. _issue 1: https://github.com/cbrunet/typo3-cb_newscal/issues/1
 .. _issue 2: https://github.com/cbrunet/typo3-cb_newscal/issues/2
 .. _issue 3: https://github.com/cbrunet/typo3-cb_newscal/issues/3
+
+
+
+Acknowledgments
+---------------
+
+- Special thanks to **Jaume Presas i Puig**, who gave me a lot of good suggestions for
+  improving the extension, and who tested it before the release of 1.1.0.

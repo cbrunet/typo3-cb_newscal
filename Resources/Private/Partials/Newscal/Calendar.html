@@ -10,9 +10,7 @@
 		<tr class="days">
 			<f:for each="{weeks.0}" as="day">
 				<th>
-					<c:firstChar>
-						<f:translate id="day.{f:format.date(date: day.ts, format: 'N')}" extensionName="news"></f:translate>
-					</c:firstChar>
+					<f:translate id="day.{f:format.date(date: day.ts, format: 'N')}.abbr" extensionName="cb_newscal"></f:translate>
 				</th>
 			</f:for>
 		</tr>
