@@ -1,15 +1,17 @@
 
 plugin.tx_cbnewscal {
 	view {
-		# cat=plugin.tx_cbnewscal/file; type=string; label=Path to template root (FE)
+		# cat=plugin.tx_cbnewscal/file/a; type=string; label=LLL:EXT:cb_newscal/Resources/Private/Language/locallang_be.xlf:constants.view.templateRootPath
 		templateRootPath = EXT:cb_newscal/Resources/Private/Templates/
-		# cat=plugin.tx_cbnewscal/file; type=string; label=Path to template partials (FE)
+		# cat=plugin.tx_cbnewscal/file/b; type=string; label=LLL:EXT:cb_newscal/Resources/Private/Language/locallang_be.xlf:constants.view.partialRootPath
 		partialRootPath = EXT:cb_newscal/Resources/Private/Partials/
-		# cat=plugin.tx_cbnewscal/file; type=string; label=Path to template layouts (FE)
+		# cat=plugin.tx_cbnewscal/file/c; type=string; label=LLL:EXT:cb_newscal/Resources/Private/Language/locallang_be.xlf:constants.view.layoutRootPath
 		layoutRootPath = EXT:cb_newscal/Resources/Private/Layouts/
 	}
 	settings {
-        # cat=plugin.tx_cbnewscal//a; type=options[Sunday=0,Monday=1]; label=First day of the week for the Calendar (default: Sunday)
+        # cat=plugin.tx_cbnewscal//a; type=options[LLL:EXT:news/Resources/Private/Language/locallang.xlf:day.7=0,LLL:EXT:news/Resources/Private/Language/locallang.xlf:day.1=1]; label=LLL:EXT:cb_newscal/Resources/Private/Language/locallang_be.xlf:constants.firstDayOfWeek
         firstDayOfWeek = 0
+        # cat=plugin.tx_cbnewscal//b; type=options[LLL:EXT:cb_newscal/Resources/Private/Language/locallang_be.xlf:constants.scrollMode.-1=-1,LLL:EXT:cb_newscal/Resources/Private/Language/locallang_be.xlf:constants.scrollMode.0=0,LLL:EXT:cb_newscal/Resources/Private/Language/locallang_be.xlf:constants.scrollMode.1=1]; label=LLL:EXT:cb_newscal/Resources/Private/Language/locallang_be.xlf:constants.scrollMode
+        scrollMode = -1
     }
 }

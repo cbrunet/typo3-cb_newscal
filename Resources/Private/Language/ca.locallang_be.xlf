@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="ca" datatype="plaintext" original="messages" date="2014-12-02T14:53:53Z" product-name="cb_newscal">
+		<header/>
+		<body>
+			<trans-unit id="flexforms_general.displayMonth" xml:space="preserve">
+                <source>Month to display (empty for current month, yyyy-mm for specific month, or +n or -n for relative offset)</source>
+                <target>Mes a mostrar (en blanc per al mes actual, yyyy-mm per a especificar el mes, o +n o -n per a un offset relatiu)</target>
+            </trans-unit>
+			<trans-unit id="flexforms_general.monthsBefore" xml:space="preserve">
+                <source>Months to display before</source>
+                <target>Mesos a mostrar abans</target>
+            </trans-unit>
+			<trans-unit id="flexforms_general.monthsAfter" xml:space="preserve">
+                <source>Months to display after</source>
+                <target>Mesos a mostrar després</target>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>
