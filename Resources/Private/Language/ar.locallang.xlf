@@ -25,11 +25,11 @@
 			</trans-unit>
 			<trans-unit id="day.6.abbr" xml:space="preserve">
 				<source>Sa</source>
-				<target>الجُمْعَة</target>
+				<target>السَّبْت</target>
 			</trans-unit>
 			<trans-unit id="day.7.abbr" xml:space="preserve">
 				<source>Su</source>
-				<target>السَّبْت</target>
+				<target>الأحد</target>
 			</trans-unit>
 		</body>
 	</file>
