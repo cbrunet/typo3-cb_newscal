@@ -15,6 +15,38 @@
                 <source>Months to display after</source>
                 <target>Mois suivants à afficher</target>
             </trans-unit>
+            <trans-unit id="constants.firstDayOfWeek" xml:space="preserve">
+                <source>First day of the week: Day for the first column displayed in the Calendar (default: Sunday)</source>
+                <target>Premier jour de la semaine: Jour à afficher pour la première colonne du calendrier (défaut: dimanche)</target>
+            </trans-unit>
+            <trans-unit id="constants.scrollMode" xml:space="preserve">
+                <source>Scroll mode: Determine the way the navigation works. All but one (-1, default) shows one overlapping month between sets, All (0) shows non-overlapping sets of months, and One (1) scroll one month each time.</source>
+                <target>Mode de défilement: Détermine la façon dont la navigation fonctionne. Tous sauf un (-1, par défaut) affiche un mois commun entre chaque page, Tout (0) affiche des mois différents dans chaque page, et Un (1) déplace un seul mois par page.</target>
+            </trans-unit>
+            <trans-unit id="constants.scrollMode.-1" xml:space="preserve">
+                <source>All but one</source>
+                <target>Tous sauf un</target>
+            </trans-unit>
+            <trans-unit id="constants.scrollMode.0" xml:space="preserve">
+                <source>All</source>
+                <target>Tout</target>
+            </trans-unit>
+            <trans-unit id="constants.scrollMode.1" xml:space="preserve">
+                <source>One</source>
+                <target>Un</target>
+            </trans-unit>
+            <trans-unit id="constants.view.layoutRootPath" xml:space="preserve">
+                <source>Path to template layouts (FE)</source>
+                <target>Chemin vers les layouts (FE)</target>
+            </trans-unit>
+            <trans-unit id="constants.view.partialRootPath" xml:space="preserve">
+                <source>Path to template partials (FE)</source>
+                <target>Chemin vers les partials (FE)</target>
+            </trans-unit>
+            <trans-unit id="constants.view.templateRootPath" xml:space="preserve">
+                <source>Path to templates (FE)</source>
+                <target>Chemin vers les templates (FE)</target>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

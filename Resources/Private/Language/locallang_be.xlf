@@ -4,38 +4,38 @@
 		<header/>
 		<body>
 			<trans-unit id="flexforms_general.displayMonth" xml:space="preserve">
-                <source>Month to display (empty for current month, yyyy-mm for specific month, or +n or -n for relative offset)</source>
-            </trans-unit>
+				<source>Month to display (empty for current month, yyyy-mm for specific month, or +n or -n for relative offset)</source>
+			</trans-unit>
 			<trans-unit id="flexforms_general.monthsBefore" xml:space="preserve">
-                <source>Months to display before</source>
-            </trans-unit>
+				<source>Months to display before</source>
+			</trans-unit>
 			<trans-unit id="flexforms_general.monthsAfter" xml:space="preserve">
-                <source>Months to display after</source>
-            </trans-unit>
-            <trans-unit id="constants.firstDayOfWeek" xml:space="preserve">
+				<source>Months to display after</source>
+			</trans-unit>
+			<trans-unit id="constants.firstDayOfWeek" xml:space="preserve">
 				<source>First day of the week: Day for the first column displayed in the Calendar (default: Sunday)</source>
-            </trans-unit>
-            <trans-unit id="constants.scrollMode" xml:space="preserve">
+			</trans-unit>
+			<trans-unit id="constants.scrollMode" xml:space="preserve">
 				<source>Scroll mode: Determine the way the navigation works. All but one (-1, default) shows one overlapping month between sets, All (0) shows non-overlapping sets of months, and One (1) scroll one month each time.</source>
-            </trans-unit>
-            <trans-unit id="constants.scrollMode.-1" xml:space="preserve">
+			</trans-unit>
+			<trans-unit id="constants.scrollMode.-1" xml:space="preserve">
 				<source>All but one</source>
-            </trans-unit>
-            <trans-unit id="constants.scrollMode.0" xml:space="preserve">
+			</trans-unit>
+			<trans-unit id="constants.scrollMode.0" xml:space="preserve">
 				<source>All</source>
-            </trans-unit>
-            <trans-unit id="constants.scrollMode.1" xml:space="preserve">
+			</trans-unit>
+			<trans-unit id="constants.scrollMode.1" xml:space="preserve">
 				<source>One</source>
-            </trans-unit>
-            <trans-unit id="constants.view.layoutRootPath" xml:space="preserve">
+			</trans-unit>
+			<trans-unit id="constants.view.layoutRootPath" xml:space="preserve">
 				<source>Path to template layouts (FE)</source>
-            </trans-unit>
-            <trans-unit id="constants.view.partialRootPath" xml:space="preserve">
+			</trans-unit>
+			<trans-unit id="constants.view.partialRootPath" xml:space="preserve">
 				<source>Path to template partials (FE)</source>
-            </trans-unit>
-            <trans-unit id="constants.view.templateRootPath" xml:space="preserve">
+			</trans-unit>
+			<trans-unit id="constants.view.templateRootPath" xml:space="preserve">
 				<source>Path to templates (FE)</source>
-            </trans-unit>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
