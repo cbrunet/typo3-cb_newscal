@@ -1,31 +1,69 @@
 @charset "UTF-8";
 
+@import "compass/css3/border-radius";
+
+$primary-color: blue;
+$secondary-color: #ccc;
 
 
 .newscal {
 	padding: 10px;
+	text-align: center;
+
+	.navigation {
+		font-size: 120%;
+		padding-top: 20px;
+	}
+
+	.calwrap {
+		display: inline-block;
+		vertical-align: top;
+		margin: 15px 10px 10px 10px;
+	}
 
 	table.calendar {
 		margin-left: auto;
 		margin-right: auto;
+		border: none;
+		border-spacing: 0;
+
+		th, td {
+			margin: 0;
+			text-align: center;
+		}
 
 		.title th {
 			text-align: center;
+			background: $primary-color;
+			color: white;
+			font-size: 120%;
 		}
 		.days th {
 			text-align: center;
+			background: $secondary-color;
 		}
+
 		td.othermonth {
 			color: #999;
 		}
-		td a {
+		td.day6, td.day7 {
+			background: #eee;
+		}
+		td.today {
 			font-weight: bold;
+			color: red;
+		}
+		td.hasevents .eventday {
+			background: $primary-color;
+			color: white;
+			@include border-radius(50%);
 		}
 
 		div.eventday {
 			position: relative;
 		
 			ul.events {
+				text-align: left;
 				list-style: none;
 				padding: 5px;
 				margin: 0;

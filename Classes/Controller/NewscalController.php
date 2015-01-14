@@ -61,13 +61,12 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 		}
 
 		$this->contentObj = $this->configurationManager->getContentObject();
-		$uid = $this->contentObj->data['uid'];
+		$navigation['uid'] = $this->contentObj->data['uid'];
 
 		$this->view->assignMultiple(array(
 			'calendars' => $calendars,
 			'navigation' => $navigation,
-			'demand' => $demand,
-			'uid' => $uid,
+			'demand' => $demand
 		));
 	}
 

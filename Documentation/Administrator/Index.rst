@@ -103,7 +103,7 @@ demand
 navigation.monthsToScroll
   Number of months needed to scroll backward or forward when navigating through months,
   according to *plugin.tx_news.settings.scrollMode* setting.
-uid
+navigation.uid
   uid of the displayed plugin content object.
 
 
@@ -167,6 +167,8 @@ weeks.*0*.month
   Month for this day (1 - 12).
 weeks.*0*.curmonth
   True is the day belongs to the current month, false otherwise.
+weeks.*0*.curday
+  True is the day is the current day, false otherwise.
 weeks.*0*.news
   Array of the news related to the current day.
 

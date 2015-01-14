@@ -2,10 +2,10 @@
 {namespace c=Cbrunet\CbNewscal\ViewHelpers}
 
 <c:offsetMonth month="{demand.month}" year="{demand.year}" offset="-{navigation.monthsToScroll}">
-	<f:render section="navlink" arguments="{text: '◀', month: month, year: year, uid: uid, class:'left'}"></f:render>
+	<f:render section="navlink" arguments="{text: '◀', month: month, year: year, uid: navigation.uid, class:'left'}"></f:render>
 </c:offsetMonth>
 <c:offsetMonth month="{demand.month}" year="{demand.year}" offset="{navigation.monthsToScroll}">
-	<f:render section="navlink" arguments="{text: '▶', month: month, year: year, uid: uid, class:'right'}"></f:render>
+	<f:render section="navlink" arguments="{text: '▶', month: month, year: year, uid: navigation.uid, class:'right'}"></f:render>
 </c:offsetMonth>
 
 
@@ -13,7 +13,7 @@
 	<f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
 	               title="{f:translate(id: 'month.{month}', extensionName: 'news')} {year}"
 	               section="c{uid}"
-	               class="{class}">
+	               class="navigation {class}">
 		{text}
 	</f:link.action>
 </f:section>

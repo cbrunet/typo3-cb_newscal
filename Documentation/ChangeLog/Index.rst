@@ -18,6 +18,7 @@ ChangeLog
   - Enabled the *Hide the pagination* option in plugin settings
   - Use translations for abbreviated days of week, instead of simply stripping the long name,
     for better internationalization.
+  - Added translations for different languages.
 
 1.0.0: 2015-01-03
   - Initial release
@@ -32,4 +33,6 @@ Acknowledgments
 ---------------
 
 - Special thanks to **Jaume Presas i Puig**, who gave me a lot of good suggestions for
-  improving the extension, and who tested it before the release of 1.1.0.
+  improving the extension, and who tested it before the release of 1.1.0. He also provided me
+  some translation files, and soem sample styles for the calendar.
+  

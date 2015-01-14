@@ -41,6 +41,7 @@ class CalendarViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHe
 				$day['day'] = (int)date('j', $dts);
 				$day['month'] = (int)date('n', $dts);
 				$day['curmonth'] = $day['month'] == $month;
+				$day['curday'] = date('Ymd') == date('Ymd', $day['ts']);
 				$day['news'] = [];
 				foreach ($newsList as $key=>$news) {
 					if ($news->getDatetime()->format('Y-m-d') == date('Y-m-d', $dts)) {

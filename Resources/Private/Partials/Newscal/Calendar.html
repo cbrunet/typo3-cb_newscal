@@ -25,7 +25,7 @@
 </table>
 
 <f:section name="calday">
-	<td class="{f:if(condition: '{day.curmonth}', then: 'curmonth', else: 'othermonth')}{f:if(condition: '{day.news}', then: ' hasevents')}">
+	<td class="day{f:format.date(date: day.ts, format: 'N')} {f:if(condition: '{day.curmonth}', then: 'curmonth', else: 'othermonth')}{f:if(condition: '{day.news}', then: ' hasevents')}{f:if(condition: '{day.curday}', then: ' today')}">
 		<f:if condition="{day.news}"><f:then>
 			<f:render section="dayevents" arguments="{day:day, settings:settings}"></f:render>
 		</f:then>
@@ -37,7 +37,7 @@
 </f:section>
 
 <f:section name="dayevents">
-	<div class="eventday"><strong>{day.day}</strong>
+	<div class="eventday">{day.day}
 		<ul id="d{day.day}" class="events">
 			<f:for each="{day.news}" as="newsItem">
 				<li><n:link newsItem="{newsItem}" settings="{settings}">
