@@ -34,6 +34,15 @@ TypoScript constants
 
 plugin.tx_cbnewscal.settings.firstDayOfWeek
   0 to begin the week on Sunday, 1 to begin the week on Monday
+plugin.tx_cbnewscal.settings.scrollMode
+  Determine the way we navigate through calendars (when more than one calendar is displayed):
+
+  - -1 (All but one) put the last displayed calendar in first position when
+    navigating forward, and vice-versa for backwark (e.g. JAN - FEB - MAR => MAR - APR - MAY).
+  - 0 (All) replace all visible calendar by the nex set of calendars
+    (e.g. JAN - FEB - MAR => APR - MAY - JUN)
+  - 1 (One) move one month position a time (e.g. JAN - FEB - MAR => FEB - MAR - APR)
+
 
 
 Paths to Fluid templates are defined in TypoScript constants. However, a better way to customize templates
@@ -49,7 +58,13 @@ plugin.tx_cbnewscal.view.layoutRootPath
 TypoScript setup
 ^^^^^^^^^^^^^^^^
 
-Default CSS stylesheet is included through *page.includeCSS.tx_cbnewscal*. 
+page.includeCSS.tx_cbnewscal
+  Default provided CSS stylesheet.
+
+
+Default CSS stylesheet is included through *page.includeCSS.tx_cbnewscal*. The default provided template
+includes a lot of classes; therefore, you can easily change the appearance of the displayed calendar
+just by modifying the stylesheet.
 
 
 
@@ -85,6 +100,9 @@ calendars
   The list of calendars to display.
 demand
   The news demand object for the plugin.
+navigation.monthsToScroll
+  Number of months needed to scroll backward or forward when navigating through months,
+  according to *plugin.tx_news.settings.scrollMode* setting.
 uid
   uid of the displayed plugin content object.
 
@@ -186,20 +204,20 @@ Example
 
    {namespace c=Cbrunet\CbNewscal\ViewHelpers}
 
-    <c:offsetMonth month="{demand.month}" year="{demand.year}" offset="-1">
+   <c:offsetMonth month="{demand.month}" year="{demand.year}" offset="-1">
       <f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
                      title="{f:translate(id: 'month.{month}', extensionName: 'news')} {year}"
                      section="c{uid}">
         Previous month
       </f:link.action>
-    </c:offsetMonth>
-    <c:offsetMonth month="{demand.month}" year="{demand.year}" offset="1">
+   </c:offsetMonth>
+   <c:offsetMonth month="{demand.month}" year="{demand.year}" offset="1">
       <f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
                      title="{f:translate(id: 'month.{month}', extensionName: 'news')} {year}"
                      section="c{uid}">
         Next month
       </f:link.action>
-    </c:offsetMonth>
+   </c:offsetMonth>
 
 
 Internationalization

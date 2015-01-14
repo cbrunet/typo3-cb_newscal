@@ -6,25 +6,15 @@
 <f:section name="content">
 	<div class="newscal">
 		<f:if condition="{settings.hidePagination} == 0">
-			<c:offsetMonth month="{demand.month}" year="{demand.year}" offset="-1">
-				<f:render section="navlink" arguments="{text: '◀', month: month, year: year, uid: uid, class:'left'}"></f:render>
-			</c:offsetMonth>
-			<c:offsetMonth month="{demand.month}" year="{demand.year}" offset="1">
-				<f:render section="navlink" arguments="{text: '▶', month: month, year: year, uid: uid, class:'right'}"></f:render>
-			</c:offsetMonth>
+			<f:render partial="Newscal/Navigation"
+			          arguments="{demand:demand, navigation:navigation}"></f:render>
 		</f:if>
 		<f:for each="{calendars}" as="calendar" iteration="iteration">
-			<f:render partial="Newscal/Calendar" arguments="{news:calendar.news, demand:calendar.demand, uid:uid, settings:settings, iteration:iteration}"></f:render>
+			<div class="calendar{f:if(condition:'{iteration.index} == {settings.monthsBefore}',then:' curmonth')}">
+			<f:render partial="Newscal/Calendar"
+			          arguments="{news:calendar.news, demand:calendar.demand, uid:uid, settings:settings, iteration:iteration}"></f:render>
+			</div>
 		</f:for>
 	</div>
 </f:section>
 
-
-<f:section name="navlink">
-	<f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
-	               title="{f:translate(id: 'month.{month}', extensionName: 'news')} {year}"
-	               section="c{uid}"
-	               class="{class}">
-		{text}
-	</f:link.action>
-</f:section>

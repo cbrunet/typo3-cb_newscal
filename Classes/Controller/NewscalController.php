@@ -37,6 +37,18 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 
 		$monthsBefore = (int)$this->settings['monthsBefore'];
 		$monthsAfter = (int)$this->settings['monthsAfter'];
+		$navigation = array();
+		switch ((int)$this->settings['scrollMode']) {
+			case -1:
+				$navigation['monthsToScroll'] = $monthsBefore + $monthsAfter > 0 ? $monthsBefore + $monthsAfter : 1;
+				break;
+			case 0:
+				$navigation['monthsToScroll'] = $monthsBefore + 1 + $monthsAfter;
+				break;
+			default:
+				$navigation['monthsToScroll'] = (int)$this->settings['scrollMode'];
+				break;
+		}
 		$calendars = array();
 
 		for ($month = $demand->getMonth() - $monthsBefore; $month <= $demand->getMonth() + $monthsAfter; $month++) {
@@ -53,6 +65,7 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 
 		$this->view->assignMultiple(array(
 			'calendars' => $calendars,
+			'navigation' => $navigation,
 			'demand' => $demand,
 			'uid' => $uid,
 		));

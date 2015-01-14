@@ -7,7 +7,10 @@ plugin.tx_news {
 	}
 	settings {
         firstDayOfWeek = {$plugin.tx_cbnewscal.settings.firstDayOfWeek}
+        scrollMode = {$plugin.tx_cbnewscal.settings.scrollMode}
     }
 }
+
+plugin.tx_cbnewscal.settings =< plugin.tx_news.settings
 
 page.includeCSS.tx_cbnewscal = EXT:cb_newscal/Resources/Public/Css/newscal.css

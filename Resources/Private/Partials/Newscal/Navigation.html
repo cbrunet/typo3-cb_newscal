@@ -1,0 +1,19 @@
+{namespace n=Tx_News_ViewHelpers}
+{namespace c=Cbrunet\CbNewscal\ViewHelpers}
+
+<c:offsetMonth month="{demand.month}" year="{demand.year}" offset="-{navigation.monthsToScroll}">
+	<f:render section="navlink" arguments="{text: '◀', month: month, year: year, uid: uid, class:'left'}"></f:render>
+</c:offsetMonth>
+<c:offsetMonth month="{demand.month}" year="{demand.year}" offset="{navigation.monthsToScroll}">
+	<f:render section="navlink" arguments="{text: '▶', month: month, year: year, uid: uid, class:'right'}"></f:render>
+</c:offsetMonth>
+
+
+<f:section name="navlink">
+	<f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
+	               title="{f:translate(id: 'month.{month}', extensionName: 'news')} {year}"
+	               section="c{uid}"
+	               class="{class}">
+		{text}
+	</f:link.action>
+</f:section>
