@@ -38,10 +38,11 @@ Month to display
   Keep this field empty to display calendar of the current month.
   If you put a date in yyyy-aa format (e.g. 2014-01), this specific month will be displayed.
   If you put a number prefixed with + or - (e.g. +1 or -2), it will offset the current month with that value.
+
 Date field to use
   This determines which date field is used for displaying news into the calendar.
-Months to display before
-Months to display after
+
+Months to display before / Months to display after
   Number of additional months to display before and after the displayed month.
   For example, if you want to display the current month and the next month, put 1 into *Months to display after*.
 
