@@ -11,7 +11,10 @@
 ChangeLog
 =========
 
-1.1.0:
+1.2.0:
+  - 
+
+1.1.0: 2015-01-16
   - Option to specify if the first day of the week is Sunday or Monday [`issue 1`_]
   - Options to display more than one months [`issue 2`_]
   - Option to display a specific month [`issue 3`_]
