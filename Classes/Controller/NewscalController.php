@@ -49,6 +49,7 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 				$navigation['monthsToScroll'] = (int)$this->settings['scrollMode'];
 				break;
 		}
+		$navigation['numberOfMonths'] = $monthsBefore + 1 + $monthsAfter;
 		$calendars = array();
 
 		for ($month = $demand->getMonth() - $monthsBefore; $month <= $demand->getMonth() + $monthsAfter; $month++) {

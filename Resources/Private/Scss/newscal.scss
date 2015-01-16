@@ -37,6 +37,12 @@ $secondary-color: #ccc;
 			background: $primary-color;
 			color: white;
 			font-size: 120%;
+
+			.navigation {
+				color: white;
+				padding-top: 0;
+				font-size: 100%;
+			}
 		}
 		.days th {
 			text-align: center;

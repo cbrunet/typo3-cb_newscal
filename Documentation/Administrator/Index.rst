@@ -103,6 +103,8 @@ demand
 navigation.monthsToScroll
   Number of months needed to scroll backward or forward when navigating through months,
   according to *plugin.tx_news.settings.scrollMode* setting.
+navigation.numberOfMonths
+  Total number of displayed months.
 navigation.uid
   uid of the displayed plugin content object.
 

@@ -27,6 +27,11 @@
   color: white;
   font-size: 120%;
 }
+.newscal table.calendar .title th .navigation {
+  color: white;
+  padding-top: 0;
+  font-size: 100%;
+}
 .newscal table.calendar .days th {
   text-align: center;
   background: #ccc;
