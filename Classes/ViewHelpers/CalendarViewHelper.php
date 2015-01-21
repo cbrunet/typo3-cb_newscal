@@ -46,7 +46,6 @@ class CalendarViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHe
 				foreach ($newsList as $key=>$news) {
 					if ($news->getDatetime()->format('Y-m-d') == date('Y-m-d', $dts)) {
 						$day['news'][] = $news;
-						unset($newsList[$key]);
 					}
 				}
 				$fd++;

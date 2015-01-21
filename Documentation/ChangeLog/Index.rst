@@ -14,6 +14,9 @@ ChangeLog
 1.2.0:
   - 
 
+1.1.1: 2015-01-21
+  - Fix bug which prevent displaying two events on the same day (thanks to Carsten Hager) [`issue 6`_]
+
 1.1.0: 2015-01-16
   - Option to specify if the first day of the week is Sunday or Monday [`issue 1`_]
   - Options to display more than one months [`issue 2`_]
@@ -29,6 +32,7 @@ ChangeLog
 .. _issue 1: https://github.com/cbrunet/typo3-cb_newscal/issues/1
 .. _issue 2: https://github.com/cbrunet/typo3-cb_newscal/issues/2
 .. _issue 3: https://github.com/cbrunet/typo3-cb_newscal/issues/3
+.. _issue 6: https://github.com/cbrunet/typo3-cb_newscal/issues/6
 
 
 
