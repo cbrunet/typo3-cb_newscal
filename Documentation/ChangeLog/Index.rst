@@ -12,7 +12,7 @@ ChangeLog
 =========
 
 1.2.0:
-  - 
+  - Fixed an incompatibility with older PHP versions (thanks to Marco Antonioli) [`issue 7`_]
 
 1.1.1: 2015-01-21
   - Fix bug which prevent displaying two events on the same day (thanks to Carsten Hager) [`issue 6`_]
@@ -33,6 +33,7 @@ ChangeLog
 .. _issue 2: https://github.com/cbrunet/typo3-cb_newscal/issues/2
 .. _issue 3: https://github.com/cbrunet/typo3-cb_newscal/issues/3
 .. _issue 6: https://github.com/cbrunet/typo3-cb_newscal/issues/6
+.. _issue 7: https://github.com/cbrunet/typo3-cb_newscal/issues/7
 
 
 

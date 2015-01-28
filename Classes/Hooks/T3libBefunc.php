@@ -67,8 +67,8 @@ EOT;
 															       
 			$monthsBefore = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($this->monthsBefore);
 			$monthsAfter = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($this->monthsAfter);
-			$params['dataStructure']['sheets']['template']['ROOT']['el'] = array('settings.monthsBefore' => $monthsBefore, 'settings.monthsAfter' => $monthsAfter) +
-				                                                           $params['dataStructure']['sheets']['template']['ROOT']['el'];
+			$params['dataStructure']['sheets']['template']['ROOT']['el'] = array_merge(array('settings.monthsBefore' => $monthsBefore, 'settings.monthsAfter' => $monthsAfter),
+				                                                           			   $params['dataStructure']['sheets']['template']['ROOT']['el']);
 		}
 	}
 }
