@@ -3,7 +3,7 @@
 
 <table class="calendar">
 	<c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}"
-	            firstDayOfWeek="{settings.firstDayOfWeek}">
+	            firstDayOfWeek="{settings.firstDayOfWeek}" datefield="{settings.dateField}">
 		<tr class="title">
 			<th colspan="7">
 				<f:if condition="{settings.hidePagination} == 0">
@@ -38,14 +38,14 @@
 			<f:render section="dayevents" arguments="{day:day, settings:settings}"></f:render>
 		</f:then>
 		<f:else>
-			{day.day}
+			<div class="day">{day.day}</div>
 		</f:else>
 		</f:if>
 	</td>
 </f:section>
 
 <f:section name="dayevents">
-	<div class="eventday">{day.day}
+	<div class="day{f:if(condition:'{day.startev}', then: ' startev')}{f:if(condition:'{day.endev}', then: ' endev')}">{day.day}
 		<ul id="d{day.day}" class="events">
 			<f:for each="{day.news}" as="newsItem">
 				<li><n:link newsItem="{newsItem}" settings="{settings}">

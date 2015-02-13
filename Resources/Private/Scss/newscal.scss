@@ -32,6 +32,14 @@ $secondary-color: #ccc;
 			text-align: center;
 		}
 
+		td {
+			padding: 0;
+		}
+
+		th, td .day {
+			padding: 9px;
+		}
+
 		.title th {
 			text-align: center;
 			background: $primary-color;
@@ -59,13 +67,16 @@ $secondary-color: #ccc;
 			font-weight: bold;
 			color: red;
 		}
-		td.hasevents .eventday {
+		td.hasevents .day {
 			background: $primary-color;
 			color: white;
-			@include border-radius(50%);
-		}
+			&.startev {
+				@include border-left-radius(50%);
+			}
+			&.endev {
+				@include border-right-radius(50%);
+			}
 
-		div.eventday {
 			position: relative;
 		
 			ul.events {
