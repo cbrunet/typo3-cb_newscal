@@ -9,14 +9,14 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 	 */
 	protected $newsRepository;
 
-	/**
-	 * 
-	 *
-	 * @param array $overwriteDemand
-	 * @return void
-	 */
-	public function calendarAction(array $overwriteDemand = NULL) {
-		$demand = $this->createDemandObjectFromSettings($this->settings);
+
+	protected function createDemandObject($overwriteDemand) {
+
+		if ($this->settings['dateField'] == 'eventStartdate') {
+			$this->newsRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_RoqNewsevent_Domain_Repository_EventRepository');
+		}
+
+		$demand = parent::createDemandObjectFromSettings($this->settings);
 
 		if ($overwriteDemand !== NULL) {
 			$demand = $this->overwriteDemandObject($demand, $overwriteDemand);
@@ -35,9 +35,13 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 			$this->adjustDemand($demand);  // Use settings.displayMonth only if no demand object
 		}
 
-		$monthsBefore = (int)$this->settings['monthsBefore'];
-		$monthsAfter = (int)$this->settings['monthsAfter'];
+		return $demand;
+	}
+
+
+	protected function createNavigationArray($monthsBefore, $monthsAfter) {
 		$navigation = array();
+		
 		switch ((int)$this->settings['scrollMode']) {
 			case -1:
 				$navigation['monthsToScroll'] = $monthsBefore + $monthsAfter > 0 ? $monthsBefore + $monthsAfter : 1;
@@ -50,6 +54,25 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 				break;
 		}
 		$navigation['numberOfMonths'] = $monthsBefore + 1 + $monthsAfter;
+
+		$this->contentObj = $this->configurationManager->getContentObject();
+		$navigation['uid'] = $this->contentObj->data['uid'];
+
+		return $navigation;
+	}
+
+	/**
+	 * 
+	 *
+	 * @param array $overwriteDemand
+	 * @return void
+	 */
+	public function calendarAction(array $overwriteDemand = NULL) {
+		$demand = $this->createDemandObject($overwriteDemand);
+		$monthsBefore = (int)$this->settings['monthsBefore'];
+		$monthsAfter = (int)$this->settings['monthsAfter'];
+		$navigation = $this->createNavigationArray($monthsBefore, $monthsAfter);
+
 		$calendars = array();
 
 		for ($month = $demand->getMonth() - $monthsBefore; $month <= $demand->getMonth() + $monthsAfter; $month++) {
@@ -61,16 +84,12 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 			$calendars[] = array('news' => $newsRecords, 'demand' => $curdemand, 'curmonth' => $month == $demand->getMonth()?1:0);
 		}
 
-		$this->contentObj = $this->configurationManager->getContentObject();
-		$navigation['uid'] = $this->contentObj->data['uid'];
-
 		$this->view->assignMultiple(array(
 			'calendars' => $calendars,
 			'navigation' => $navigation,
 			'demand' => $demand
 		));
 	}
-
 
 
 	protected function adjustDemand(&$demand) {
@@ -91,7 +110,6 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 			$demand->setMonth((int)substr($displayMonth, 5, 2));
 			return;
 		}
-
 	}
 
 }

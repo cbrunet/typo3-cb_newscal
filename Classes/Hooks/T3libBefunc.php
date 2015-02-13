@@ -49,26 +49,37 @@ EOT;
 	 * Remove unused fields in the flexform.
 	 */
 	public function updateFlexforms(&$params, &$reference) {
-		if ($params['selectedView'] == 'Newscal->calendar') {
-			$removedFields = array(
-				'sDEF' => 'orderBy,orderDirection,timeRestriction,timeRestrictionHigh,singleNews',
-				'additional' => 'limit,offset,topNewsFirst,excludeAlreadyDisplayedNews,disableOverrideDemand',
-				'template' => '',
-			);
-			$this->deleteFromStructure($params['dataStructure'], $removedFields);
-			unset($params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][0]);  // Remove empty field
-			$params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][] = array('LLL:EXT:news/Resources/Private/Language/locallang_be.xml:flexforms_general.orderBy.tstamp', 'tstamp');
-			$params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][] = array('LLL:EXT:news/Resources/Private/Language/locallang_be.xml:flexforms_general.orderBy.crdate', 'crdate');
-
-			$displayMonth = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($this->currentMonth);
-			$params['dataStructure']['sheets']['sDEF']['ROOT']['el'] = array_slice($params['dataStructure']['sheets']['sDEF']['ROOT']['el'], 0, 1, true) +
-			                                                           array('settings.displayMonth' => $displayMonth) +
-															           array_slice($params['dataStructure']['sheets']['sDEF']['ROOT']['el'], 1, NULL, true);
-															       
-			$monthsBefore = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($this->monthsBefore);
-			$monthsAfter = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($this->monthsAfter);
-			$params['dataStructure']['sheets']['template']['ROOT']['el'] = array_merge(array('settings.monthsBefore' => $monthsBefore, 'settings.monthsAfter' => $monthsAfter),
-				                                                           			   $params['dataStructure']['sheets']['template']['ROOT']['el']);
+		switch ($params['selectedView']) {
+			case 'Newscal->calendar':
+				$this->updateCalendarFlexforms($params, $reference);
+				break;
 		}
+	}
+
+	protected function updateCalendarFlexforms(&$params, &$reference) {
+		$removedFields = array(
+			'sDEF' => 'orderBy,orderDirection,timeRestriction,timeRestrictionHigh,singleNews',
+			'additional' => 'limit,offset,topNewsFirst,excludeAlreadyDisplayedNews,disableOverrideDemand',
+			'template' => '',
+		);
+		$this->deleteFromStructure($params['dataStructure'], $removedFields);
+
+		unset($params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][0]);  // Remove empty field
+		$params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][] = array('LLL:EXT:news/Resources/Private/Language/locallang_be.xml:flexforms_general.orderBy.tstamp', 'tstamp');
+		$params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][] = array('LLL:EXT:news/Resources/Private/Language/locallang_be.xml:flexforms_general.orderBy.crdate', 'crdate');
+
+		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('roq_newsevent')) {
+			$params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][] = array('LLL:EXT:cb_newscal/Resources/Private/Language/locallang_be.xml:flexforms_general.orderBy.eventStartdate', 'eventStartdate');
+		}
+
+		$displayMonth = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($this->currentMonth);
+		$params['dataStructure']['sheets']['sDEF']['ROOT']['el'] = array_slice($params['dataStructure']['sheets']['sDEF']['ROOT']['el'], 0, 1, true) +
+		                                                           array('settings.displayMonth' => $displayMonth) +
+														           array_slice($params['dataStructure']['sheets']['sDEF']['ROOT']['el'], 1, NULL, true);
+														       
+		$monthsBefore = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($this->monthsBefore);
+		$monthsAfter = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($this->monthsAfter);
+		$params['dataStructure']['sheets']['template']['ROOT']['el'] = array_merge(array('settings.monthsBefore' => $monthsBefore, 'settings.monthsAfter' => $monthsAfter),
+			$params['dataStructure']['sheets']['template']['ROOT']['el']);
 	}
 }

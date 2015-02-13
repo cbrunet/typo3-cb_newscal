@@ -9,9 +9,10 @@ class CalendarViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHe
 	 * @param int $month 
 	 * @param int $year 
 	 * @param int $firstDayOfWeek 0 for Sunday, 1 for Monday
+	 * @param string $datefield Name of the field used for the date
 	 * @return string Rendered result
 	 */
-	public function render($newsList, $month=NULL, $year=NULL, $firstDayOfWeek=0) {
+	public function render($newsList, $month=NULL, $year=NULL, $firstDayOfWeek=0, $datefield="datetime") {
 		if ($year === NULL) {
 			$year = date('Y');
 		}
@@ -42,11 +43,55 @@ class CalendarViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHe
 				$day['month'] = (int)date('n', $dts);
 				$day['curmonth'] = $day['month'] == $month;
 				$day['curday'] = date('Ymd') == date('Ymd', $day['ts']);
+				$day['startev'] = True;
+				$day['endev'] = True;
 				$day['news'] = [];
 				foreach ($newsList as $key=>$news) {
-					if ($news->getDatetime()->format('Y-m-d') == date('Y-m-d', $dts)) {
-						$day['news'][] = $news;
+					switch ($datefield) {
+						case 'datetime':
+							if ($news->getDatetime()->format('Y-m-d') == date('Y-m-d', $dts)) {
+								$day['news'][] = $news;
+							}
+							break;
+						case 'archive':
+							if ($news->getArchive()->format('Y-m-d') == date('Y-m-d', $dts)) {
+								$day['news'][] = $news;
+							}
+							break;
+						case 'crdate':
+							if ($news->getCrdate()->format('Y-m-d') == date('Y-m-d', $dts)) {
+								$day['news'][] = $news;
+							}
+							break;
+						case 'tstamp':
+							if ($news->getTstamp()->format('Y-m-d') == date('Y-m-d', $dts)) {
+								$day['news'][] = $news;
+							}
+							break;
+						case 'eventStartdate':
+							$cd = date('Y-m-d', $dts);
+							$sd = $news->getEventStartdate()->format('Y-m-d');
+							$ed = $news->getEventEnddate();
+							if (is_null($ed)) {
+								if ($cd == $sd) {
+									$day['news'][] = $news;
+								}
+							}
+							else {
+								$ed = $ed->format('Y-m-d');
+								if ((strcmp($sd, $cd) <= 0) and (strcmp($ed, $cd) >= 0)) {
+									$day['news'][] = $news;
+									if ($sd != $cd) {
+										$day['startev'] = False;
+									}
+									if ($ed != $cd) {
+										$day['endev'] = False;
+									}
+								}
+							}
+							break;
 					}
+					
 				}
 				$fd++;
 				$week[] = $day;

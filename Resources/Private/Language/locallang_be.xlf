@@ -12,6 +12,9 @@
 			<trans-unit id="flexforms_general.monthsAfter" xml:space="preserve">
 				<source>Months to display after</source>
 			</trans-unit>
+			<trans-unit id="flexforms_general.orderBy.eventStartdate" xml:space="preserve">
+				<source>Event dates</source>
+			</trans-unit>
 			<trans-unit id="constants.firstDayOfWeek" xml:space="preserve">
 				<source>First day of the week: Day for the first column displayed in the Calendar (default: Sunday)</source>
 			</trans-unit>
