@@ -67,7 +67,6 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 		}
 
 		$demand->setOrder($demand->getDateField() . ' asc');
-		$demand->setTopNewsFirst(0);  // TODO: enable this
 
 		if ($overwriteDemand === NULL) {
 			// Use settings.displayMonth only if no demand object

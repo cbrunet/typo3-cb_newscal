@@ -59,7 +59,7 @@ EOT;
 	protected function updateCalendarFlexforms(&$params, &$reference) {
 		$removedFields = array(
 			'sDEF' => 'orderBy,orderDirection,timeRestriction,timeRestrictionHigh,singleNews',
-			'additional' => 'limit,offset,topNewsFirst,excludeAlreadyDisplayedNews,disableOverrideDemand',
+			'additional' => 'limit,offset,excludeAlreadyDisplayedNews,disableOverrideDemand',
 			'template' => '',
 		);
 		$this->deleteFromStructure($params['dataStructure'], $removedFields);
