@@ -22,9 +22,12 @@
   text-align: center;
 }
 .newscal table.calendar td {
-  padding: 0;
+  padding: 4px 0;
 }
-.newscal table.calendar th, .newscal table.calendar td .day {
+.newscal table.calendar td .day {
+  padding: 5px 9px;
+}
+.newscal table.calendar th {
   padding: 9px;
 }
 .newscal table.calendar .title th {
@@ -57,22 +60,6 @@
   color: white;
   position: relative;
 }
-.newscal table.calendar td.hasevents .day.startev {
-  -moz-border-radius-topleft: 50%;
-  -webkit-border-top-left-radius: 50%;
-  border-top-left-radius: 50%;
-  -moz-border-radius-bottomleft: 50%;
-  -webkit-border-bottom-left-radius: 50%;
-  border-bottom-left-radius: 50%;
-}
-.newscal table.calendar td.hasevents .day.endev {
-  -moz-border-radius-topright: 50%;
-  -webkit-border-top-right-radius: 50%;
-  border-top-right-radius: 50%;
-  -moz-border-radius-bottomright: 50%;
-  -webkit-border-bottom-right-radius: 50%;
-  border-bottom-right-radius: 50%;
-}
 .newscal table.calendar td.hasevents .day ul.events {
   text-align: left;
   list-style: none;
@@ -95,10 +82,34 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.newscal table.calendar td.hasevents .day:hover {
+.newscal table.calendar td.hasevents.startev {
+  padding-left: 4px;
+}
+.newscal table.calendar td.hasevents.startev .day {
+  padding-left: 5px;
+  -moz-border-radius-topleft: 50%;
+  -webkit-border-top-left-radius: 50%;
+  border-top-left-radius: 50%;
+  -moz-border-radius-bottomleft: 50%;
+  -webkit-border-bottom-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+.newscal table.calendar td.hasevents.endev {
+  padding-right: 4px;
+}
+.newscal table.calendar td.hasevents.endev .day {
+  padding-right: 5px;
+  -moz-border-radius-topright: 50%;
+  -webkit-border-top-right-radius: 50%;
+  border-top-right-radius: 50%;
+  -moz-border-radius-bottomright: 50%;
+  -webkit-border-bottom-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+.newscal table.calendar td.hasevents:hover {
   cursor: pointer;
 }
-.newscal table.calendar td.hasevents .day:hover ul.events {
+.newscal table.calendar td.hasevents:hover ul.events {
   display: block;
 }
 .newscal .left {
