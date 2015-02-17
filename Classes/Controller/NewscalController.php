@@ -20,59 +20,154 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 	 * @return void
 	 */
 	public function calendarAction(array $overwriteDemand = NULL) {
+		if ($this->settings['dateField'] == 'eventStartdate') {
+			// $this->newsRepository = $this->objectManager->get('Tx_RoqNewsevent_Domain_Repository_EventRepository');
+			$this->newsRepository = $this->objectManager->get('\\Cbrunet\\CbNewscal\\Domain\\Repository\\EventRepository');
+		}
+
+		$months = array();
 		$demand = $this->createDemandObject($overwriteDemand);
 		$monthsBefore = (int)$this->settings['monthsBefore'];
 		$monthsAfter = (int)$this->settings['monthsAfter'];
 
-		$calendars = array();
-
-		for ($month = $demand->getMonth() - $monthsBefore; $month <= $demand->getMonth() + $monthsAfter; $month++) {
-			$cm = mktime(0, 0, 0, $month, 1, $demand->getYear());
-			$curdemand = clone $demand;
-			$curdemand->setYear((int)date('Y', $cm));
-			$curdemand->setMonth((int)date('n', $cm));
-			$newsRecords = $this->newsRepository->findDemanded($curdemand);
-			$calendars[] = array('news' => $newsRecords, 'year' => $curdemand->getYear(), 'month' => $curdemand->getMonth(), 'curmonth' => $month == $demand->getMonth()?1:0);
+		for ($m = $this->month - $monthsBefore; $m <= $this->month + $monthsAfter; $m++) {
+			$cm = mktime(0, 0, 0, $m, 1, $this->year);
+			$month = date('n', $cm);
+			$year = date('Y', $cm);
+			$months[] = array(
+				'month' => $month,
+				'year' => $year,
+				'curmonth' => ($month == $this->month),
+				'weeks' => $this->getWeeks($demand, $month, $year)
+			);
 		}
 
 		$this->view->assignMultiple(array(
-			'calendars' => $calendars,
+			'months' => $months,
 			'navigation' => $this->createNavigationArray()
 		));
 	}
 
-
 	protected function createDemandObject($overwriteDemand) {
-		if ($this->settings['dateField'] == 'eventStartdate') {
-			$this->newsRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_RoqNewsevent_Domain_Repository_EventRepository');
-		}
+		$this->year = (int)date('Y');
+		$this->month = (int)date('n');
 
-		$demand = parent::createDemandObjectFromSettings($this->settings);
-
+		$demand = $this->createDemandObjectFromSettings($this->settings);
 		if ($overwriteDemand !== NULL) {
 			$demand = $this->overwriteDemandObject($demand, $overwriteDemand);
 		}
 
-		if ($demand->getYear() == NULL) {
-			$demand->setYear((int)date('Y'));
+		if ($demand->getYear() !== NULL) {
+			$this->year = $demand->getYear();
+			$demand->setYear(NULL);
 		}
-		if ($demand->getMonth() == NULL) {
-			$demand->setMonth((int)date('n'));
+		if ($demand->getMonth() !== NULL) {
+			$this->month = $demand->getMonth();
+			$demand->setMonth(NULL);
 		}
-		$this->year = $demand->getYear();
-		$this->month = $demand->getMonth();
 
 		$demand->setOrder($demand->getDateField() . ' asc');
-		$demand->setTopNewsFirst(0);
+		$demand->setTopNewsFirst(0);  // TODO: enable this
 
 		if ($overwriteDemand === NULL) {
-			$this->adjustDemand($demand);  // Use settings.displayMonth only if no demand object
+			// Use settings.displayMonth only if no demand object
+			$displayMonth = $this->settings['displayMonth'];
+
+			// Display relative to current month
+			if (strlen($displayMonth) > 1 && ($displayMonth[0] == '-' || $displayMonth[0] == '+')) {
+				$displayMonth = (int)$displayMonth;
+				$mt = mktime(0, 0, 0, $this->month + $displayMonth, 1, $this->year);
+				$this->year = (int)date('Y', $mt);
+				$this->month = (int)date('n', $mt);
+			}
+
+			// Display absolute month
+			if (strlen($displayMonth) == 7 && $displayMonth[4] == '-') {
+				$this->year = (int)substr($displayMonth, 0, 4);
+				$this->month = (int)substr($displayMonth, 5, 2);
+			}
 		}
 
 		return $demand;
 	}
 
 
+	protected function getWeeks($demand, $month, $year) {
+		$curday = $this->firstDayOfMonth($month, $year);
+		$lastday = date('t', mktime(0, 0, 0, $month, 1, $year));
+		$weeks = array();
+		while ($curday <= $lastday) {
+			$week = array();
+			for ($d=0; $d<7; $d++) {
+				$day = array();
+				$dts = mktime(0, 0, 0, $month, $curday, $year);
+				$day['ts'] = $dts;
+				$day['day'] = date('j', $dts);
+				$day['month'] = date('n', $dts);
+				$day['curmonth'] = $day['month'] == $month;
+				$day['curday'] = date('Ymd') == date('Ymd', $day['ts']);
+				$day['startev'] = True;
+				$day['endev'] = True;
+
+				$demand->setYear(date('Y', $dts));
+				$demand->setMonth($day['month']);
+				$demand->setDay($day['day']);
+				$day['news'] = $this->newsRepository->findDemanded($demand);
+
+				if ($this->settings['dateField'] == 'eventStartdate') {
+					$cd = date('Y-m-d', $dts);
+					foreach ($day['news'] as $event) {
+						if ($event->getEventStartdate()->format('Y-m-d') < $cd) {
+							$day['startev'] = False;
+						}
+						if ($event->getEventEnddate() !== NULL) {
+							if ($event->getEventEnddate()->format('Y-m-d') > $cd) {
+								$day['endev'] = False;
+							}
+						}
+					}
+				}
+
+				$week[] = $day;
+				$curday++;
+			}
+			$weeks[] = $week;
+		}
+
+		$demand->setYear(NULL);
+		$demand->setMonth(NULL);
+		$demand->setDay(NULL);
+		return $weeks;
+	}
+
+	/**
+	 * Return the first day of the month as (nagative) offset from day 1
+	 *
+	 * @return int
+	 **/
+	protected function firstDayOfMonth($month, $year) {
+		$fdom = mktime(0, 0, 0, $month, 1, $year);  // First day of the month
+		$fdow = (int)date('w', $fdom);  // Day of week of the first day
+
+		$fd = 1 - $fdow + $this->settings['firstDayOfWeek'];  // First day of the calendar
+		if ($fd > 1) {
+			$fd -= 7;
+		}
+		return $fd;
+	}
+
+
+	/**
+	 * Create the array needed for navigation.
+	 *
+	 * Returned array contains:
+	 *    uid:            uid of current content object
+	 *    numberOfMonths: number of displayed months
+	 *    prev:           month and year for previous arrow
+	 *    next:           month and year for mext arrow
+	 *
+	 * @return array
+	 **/
 	protected function createNavigationArray() {
 		$navigation = array('prev' => array(), 'next' => array());
 		$monthsBefore = (int)$this->settings['monthsBefore'];
@@ -102,26 +197,6 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 		$navigation['uid'] = $this->contentObj->data['uid'];
 
 		return $navigation;
-	}
-
-	protected function adjustDemand(&$demand) {
-		$displayMonth = $this->settings['displayMonth'];
-
-		// Display relative to current month
-		if (strlen($displayMonth) > 1 && ($displayMonth[0] == '-' || $displayMonth[0] == '+')) {
-			$displayMonth = (int)$displayMonth;
-			$mt = mktime(0, 0, 0, $demand->getMonth() + $displayMonth, 1, $demand->getYear());
-			$demand->setYear((int)date('Y', $mt));
-			$demand->setMonth((int)date('n', $mt));
-			return;
-		}
-
-		// Display absolute month
-		if (strlen($displayMonth) == 7 && $displayMonth[4] == '-') {
-			$demand->setYear((int)substr($displayMonth, 0, 4));
-			$demand->setMonth((int)substr($displayMonth, 5, 2));
-			return;
-		}
 	}
 
 }

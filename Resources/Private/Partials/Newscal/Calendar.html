@@ -2,8 +2,6 @@
 {namespace c=Cbrunet\CbNewscal\ViewHelpers}
 
 <table class="calendar">
-	<c:calendar newsList="{calendar.news}" year="{calendar.year}" month="{calendar.month}"
-	            firstDayOfWeek="{settings.firstDayOfWeek}" datefield="{settings.dateField}">
 		<tr class="title">
 			<th colspan="7">
 				<f:if condition="{settings.hidePagination} == 0">
@@ -12,24 +10,23 @@
 						          arguments="{navigation:navigation}"></f:render>
 					</f:if>
 				</f:if>
-				<f:translate id="month.<f:format.printf arguments='{0: calendar.month}'>%02d</f:format.printf>" extensionName="news"></f:translate> {calendar.year}
+				<f:translate id="month.<f:format.printf arguments='{0: month.month}'>%02d</f:format.printf>" extensionName="news"></f:translate> {month.year}
 			</th>
 		</tr>
 		<tr class="days">
-			<f:for each="{weeks.0}" as="day">
+			<f:for each="{month.weeks.0}" as="day">
 				<th>
 					<f:translate id="day.{f:format.date(date: day.ts, format: 'N')}.abbr" extensionName="cb_newscal"></f:translate>
 				</th>
 			</f:for>
 		</tr>
-		<f:for each="{weeks}" as="week">
+		<f:for each="{month.weeks}" as="week">
 			<tr>
 				<f:for each="{week}" as="day">
 					<f:render section="calday" arguments="{day:day, settings:settings}"></f:render>
 				</f:for>
 			</tr>
 		</f:for>
-	</c:calendar>
 </table>
 
 <f:section name="calday">

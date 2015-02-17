@@ -5,6 +5,92 @@ namespace Cbrunet\CbNewscal\Tests\Unit\Controller;
 class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
+	 * Test creation of the demand object against different settings
+	 *
+	 * @test
+	 * @dataProvider createDemandObjectDataProvider
+	 * @return void
+	 */
+	public function createDemandObject($settings, $overwriteDemand, $expMonth, $expYear) {
+		$configurationManager = $this->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
+		$configurationManager->method('getConfiguration')->willReturn($settings);
+
+		$mockedController = $this->getAccessibleMock('\\Cbrunet\\CbNewscal\\Controller\\NewscalController',
+			array('createDemandObjectFromSettings'));
+		$mockedController->injectConfigurationManager($configurationManager);
+
+		$d = clone new \Tx_News_Domain_Model_Dto_AdministrationDemand();
+		$mockedController->method('createDemandObjectFromSettings')->willReturn($d);
+		$demand = $mockedController->_call('createDemandObject', $overwriteDemand);
+
+		$this->assertEquals($expMonth, $mockedController->_get('month'));
+		$this->assertEquals($expYear, $mockedController->_get('year'));
+		$this->assertNull($demand->getMonth());
+		$this->assertNull($demand->getYear());
+	}
+
+	/**
+	 * Data provider createDemandObject
+	 *
+	 * @return array
+	 */
+	public function createDemandObjectDataProvider() {
+		$po = mktime(0, 0, 0, date('n')+1, 1, date('Y'));
+		$mo = mktime(0, 0, 0, date('n')-1, 1, date('Y'));
+
+		return array(
+			'base' => array(array(), NULL, date('n'), date('Y')),
+			'overwrite' => array(array(), array('month' => 12, 'year' => 2014), 12, 2014),
+			'absolute' => array(array('displayMonth' => '2010-11'), NULL, 11, 2010),
+			'relativePlusOne' => array(array('displayMonth' => '+1'), NULL, date('n', $po), date('Y', $po)),
+			'relativeMinusOne' => array(array('displayMonth' => '-1'), NULL, date('n', $mo), date('Y', $mo)),
+			'absoluteButOverwrite' => array(array('displayMonth' => '2010-11'), array('month' => 12, 'year' => 2014), 12, 2014),
+		);
+	}
+
+
+	/**
+	 * Test calculation of the fist day of the monthly calendar
+	 *
+	 * @test
+	 * @dataProvider firstDayOfMonthDataProvider
+	 * @return void
+	 */
+	public function firstDayOfMonth($month, $year, $firstDayOfWeek, $expected) {
+		$configurationManager = $this->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
+		$configurationManager->method('getConfiguration')->willReturn(array('firstDayOfWeek' => $firstDayOfWeek));
+
+		$mockedController = $this->getAccessibleMock('\\Cbrunet\\CbNewscal\\Controller\\NewscalController', array('dummy'));
+		$mockedController->injectConfigurationManager($configurationManager);
+		
+		$this->assertEquals($expected, $mockedController->_call('firstDayOfMonth', $month, $year));
+	}
+
+	/**
+	 * Data provider firstDayOfMonth
+	 *
+	 * @return array
+	 */
+	public function firstDayOfMonthDataProvider() {
+		return array(
+			'sunFirstFeb2015' => array(2, 2015, 0, 1),
+			'sunFirstDec2014' => array(12, 2014, 0, 0),
+			'sunFirstJul2014' => array(7, 2014, 0, -1),
+			'sunFirstJan2014' => array(1, 2014, 0, -2),
+			'sunFirstJan2015' => array(1, 2015, 0, -3),
+			'sunFirstAug2014' => array(8, 2014, 0, -4),
+			'sunFirstMar2014' => array(3, 2014, 0, -5),
+			'monFirstFeb2015' => array(2, 2015, 1, -5),
+			'monFirstDec2014' => array(12, 2014, 1, 1),
+			'monFirstJul2014' => array(7, 2014, 1, 0),
+			'monFirstJan2014' => array(1, 2014, 1, -1),
+			'monFirstJan2015' => array(1, 2015, 1, -2),
+			'monFirstAug2014' => array(8, 2014, 1, -3),
+			'monFirstMar2014' => array(3, 2014, 1, -4),
+		);
+	}
+
+	/**
 	 * Test construction of navigation from different settings
 	 *
 	 * @test
@@ -29,7 +115,7 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	}
 
 	/**
-	 * Data provider for testNavigationArray
+	 * Data provider for navigationArray
 	 *
 	 * @return array
 	 */

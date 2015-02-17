@@ -11,10 +11,10 @@
 				          arguments="{navigation:navigation}"></f:render>
 			</f:if>
 		</f:if>
-		<f:for each="{calendars}" as="calendar" iteration="iteration">
+		<f:for each="{months}" as="month" iteration="iteration">
 			<div class="calwrap{f:if(condition:'{iteration.index} == {settings.monthsBefore}',then:' curmonth')}">
 			<f:render partial="Newscal/Calendar"
-			          arguments="{calendar:calendar, settings:settings, iteration:iteration, navigation:navigation}"></f:render>
+			          arguments="{month:month, settings:settings, iteration:iteration, navigation:navigation}"></f:render>
 			</div>
 		</f:for>
 	</div>
