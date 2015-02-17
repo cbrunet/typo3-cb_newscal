@@ -21,7 +21,6 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 	 */
 	public function calendarAction(array $overwriteDemand = NULL) {
 		if ($this->settings['dateField'] == 'eventStartdate') {
-			// $this->newsRepository = $this->objectManager->get('Tx_RoqNewsevent_Domain_Repository_EventRepository');
 			$this->newsRepository = $this->objectManager->get('\\Cbrunet\\CbNewscal\\Domain\\Repository\\EventRepository');
 		}
 
