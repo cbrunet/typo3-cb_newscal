@@ -2,17 +2,17 @@
 {namespace c=Cbrunet\CbNewscal\ViewHelpers}
 
 <table class="calendar">
-	<c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}"
+	<c:calendar newsList="{calendar.news}" year="{calendar.year}" month="{calendar.month}"
 	            firstDayOfWeek="{settings.firstDayOfWeek}" datefield="{settings.dateField}">
 		<tr class="title">
 			<th colspan="7">
 				<f:if condition="{settings.hidePagination} == 0">
 					<f:if condition="{navigation.numberOfMonths} == 1">
 						<f:render partial="Newscal/Navigation"
-						          arguments="{demand:demand, navigation:navigation}"></f:render>
+						          arguments="{navigation:navigation}"></f:render>
 					</f:if>
 				</f:if>
-				<f:translate id="month.<f:format.printf arguments='{0: demand.month}'>%02d</f:format.printf>" extensionName="news"></f:translate> {demand.year}
+				<f:translate id="month.<f:format.printf arguments='{0: calendar.month}'>%02d</f:format.printf>" extensionName="news"></f:translate> {calendar.year}
 			</th>
 		</tr>
 		<tr class="days">
