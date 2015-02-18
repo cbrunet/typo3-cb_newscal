@@ -185,11 +185,30 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 		}
 
 		$prevdate = mktime(0, 0, 0, $this->month - $monthsToScroll, 1, $this->year);
-		$navigation['prev']['month'] = date('m', $prevdate);
-		$navigation['prev']['year'] = date('Y', $prevdate);
+		if ($this->settings['timeRestriction']) {
+			$ts = strtotime($this->settings['timeRestriction']);
+			$trm = mktime(0, 0, 0, date('n', $ts), 1, date('Y', $ts));
+			if ($prevdate < $trm) {
+				$navigation['prev'] = NULL;
+			}
+		}
+		if (is_array($navigation['prev'])) {
+			$navigation['prev']['month'] = date('m', $prevdate);
+			$navigation['prev']['year'] = date('Y', $prevdate);
+		}
+
 		$nextdate = mktime(0, 0, 0, $this->month + $monthsToScroll, 1, $this->year);
-		$navigation['next']['month'] = date('m', $nextdate);
-		$navigation['next']['year'] = date('Y', $nextdate);
+		if ($this->settings['timeRestrictionHigh']) {
+			$ts = strtotime($this->settings['timeRestrictionHigh']);
+			$trm = mktime(0, 0, 0, date('n', $ts), 1, date('Y', $ts));
+			if ($nextdate > $trm) {
+				$navigation['next'] = NULL;
+			}
+		}
+		if (is_array($navigation['next'])) {
+			$navigation['next']['month'] = date('m', $nextdate);
+			$navigation['next']['year'] = date('Y', $nextdate);
+		}
 
 		$this->contentObj = $this->configurationManager->getContentObject();
 		$navigation['uid'] = $this->contentObj->data['uid'];

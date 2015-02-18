@@ -97,7 +97,7 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @dataProvider navigationArrayDataProvider
 	 * @return void
 	 */
-	public function navigationArray($month, $year, $settings, $prevMonth, $prevYear, $nextMonth, $nextYear, $numMonths) {
+	public function navigationArray($month, $year, $settings, $expected) {
 		$configurationManager = $this->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
 		$configurationManager->method('getConfiguration')->willReturn($settings);
 
@@ -107,11 +107,7 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$mockedController->injectConfigurationManager($configurationManager);
 		$nav = $mockedController->_call('createNavigationArray');
 
-		$this->assertEquals($prevMonth, $nav['prev']['month']);
-		$this->assertEquals($prevYear, $nav['prev']['year']);
-		$this->assertEquals($nextMonth, $nav['next']['month']);
-		$this->assertEquals($nextYear, $nav['next']['year']);
-		$this->assertEquals($numMonths, $nav['numberOfMonths']);
+		$this->assertEquals($nav, $expected);
 	}
 
 	/**
@@ -120,32 +116,144 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @return array
 	 */
 	public function navigationArrayDataProvider() {
-		$oneMonthKeepOne = array('monthsBefore' => 0, 'monthsAfter' => 0, 'scrollMode' => -1);
-		$oneMonthScrollAll = array('monthsBefore' => 0, 'monthsAfter' => 0, 'scrollMode' => 0);
-		$oneMonthScrollOne = array('monthsBefore' => 0, 'monthsAfter' => 0, 'scrollMode' => 1);
-		$threeMonthsKeepOne = array('monthsBefore' => 1, 'monthsAfter' => 1, 'scrollMode' => -1);
-		$threeMonthsScrollAll = array('monthsBefore' => 1, 'monthsAfter' => 1, 'scrollMode' => 0);
-		$threeMonthsScrollOne = array('monthsBefore' => 1, 'monthsAfter' => 1, 'scrollMode' => 1);
+		$oneMonthKeepOne = array(
+			'monthsBefore' => 0, 
+			'monthsAfter' => 0, 
+			'scrollMode' => -1,
+			'timeRestriction' => '2010-1-1',
+			'timeRestrictionHigh' => '2020-1-1');
+		$oneMonthScrollAll = array(
+			'monthsBefore' => 0, 
+			'monthsAfter' => 0, 
+			'scrollMode' => 0,
+			'timeRestriction' => '2010-1-1',
+			'timeRestrictionHigh' => '2020-1-1');
+		$oneMonthScrollOne = array(
+			'monthsBefore' => 0, 
+			'monthsAfter' => 0, 
+			'scrollMode' => 1,
+			'timeRestriction' => '2010-1-1',
+			'timeRestrictionHigh' => '2020-1-1');
+		$threeMonthsKeepOne = array(
+			'monthsBefore' => 1, 
+			'monthsAfter' => 1, 
+			'scrollMode' => -1,
+			'timeRestriction' => '2010-1-1',
+			'timeRestrictionHigh' => '2020-1-1');
+		$threeMonthsScrollAll = array(
+			'monthsBefore' => 1, 
+			'monthsAfter' => 1, 
+			'scrollMode' => 0,
+			'timeRestriction' => '2010-1-1',
+			'timeRestrictionHigh' => '2020-1-1');
+		$threeMonthsScrollOne = array(
+			'monthsBefore' => 1, 
+			'monthsAfter' => 1, 
+			'scrollMode' => 1,
+			'timeRestriction' => '2010-1-1',
+			'timeRestrictionHigh' => '2020-1-1');
 
 		return array(
-			'oneMonthKeepOneJan' => array(1, 2015, $oneMonthKeepOne, 12, 2014, 2, 2015, 1),
-			'oneMonthKeepOneDec' => array(12, 2015, $oneMonthKeepOne, 11, 2015, 1, 2016, 1),
-			'oneMonthKeepOneMar' => array(3, 2015, $oneMonthKeepOne, 2, 2015, 4, 2015, 1),
-			'oneMonthScrollAllJan' => array(1, 2015, $oneMonthScrollAll, 12, 2014, 2, 2015, 1),
-			'oneMonthScrollAllDec' => array(12, 2015, $oneMonthScrollAll, 11, 2015, 1, 2016, 1),
-			'oneMonthScrollAllMar' => array(3, 2015, $oneMonthScrollAll, 2, 2015, 4, 2015, 1),
-			'oneMonthScrollOneJan' => array(1, 2015, $oneMonthScrollOne, 12, 2014, 2, 2015, 1),
-			'oneMonthScrollOneDec' => array(12, 2015, $oneMonthScrollOne, 11, 2015, 1, 2016, 1),
-			'oneMonthScrollOneMar' => array(3, 2015, $oneMonthScrollOne, 2, 2015, 4, 2015, 1),
-			'threeMonthsKeepOneJan' => array(1, 2015, $threeMonthsKeepOne, 11, 2014, 3, 2015, 3),
-			'threeMonthsKeepOneDec' => array(12, 2015, $threeMonthsKeepOne, 10, 2015, 2, 2016, 3),
-			'threeMonthsKeepOneMar' => array(3, 2015, $threeMonthsKeepOne, 1, 2015, 5, 2015, 3),
-			'threeMonthsScrollAllJan' => array(1, 2015, $threeMonthsScrollAll, 10, 2014, 4, 2015, 3),
-			'threeMonthsScrollAllDec' => array(12, 2015, $threeMonthsScrollAll, 9, 2015, 3, 2016, 3),
-			'threeMonthsScrollAllMar' => array(3, 2015, $threeMonthsScrollAll, 12, 2014, 6, 2015, 3),
-			'threeMonthsScrollOneJan' => array(1, 2015, $threeMonthsScrollOne, 12, 2014, 2, 2015, 3),
-			'threeMonthsScrollOneDec' => array(12, 2015, $threeMonthsScrollOne, 11, 2015, 1, 2016, 3),
-			'threeMonthsScrollOneMar' => array(3, 2015, $threeMonthsScrollOne, 2, 2015, 4, 2015, 3),
+			'oneMonthKeepOneJan' => array(1, 2015, $oneMonthKeepOne, array(
+				'prev' => array('month' => 12, 'year' => 2014), 
+				'next' => array('month' => 2, 'year' => 2015), 
+				'numberOfMonths' => 1,
+				'uid' => 0)),
+			'oneMonthKeepOneDec' => array(12, 2015, $oneMonthKeepOne, array(
+				'prev' => array('month' => 11, 'year' => 2015), 
+				'next' => array('month' => 1, 'year' => 2016), 
+				'numberOfMonths' => 1,
+				'uid' => 0)),
+			'oneMonthKeepOneMar' => array(3, 2015, $oneMonthKeepOne, array(
+				'prev' => array('month' =>  2, 'year' => 2015), 
+				'next' => array('month' => 4, 'year' => 2015), 
+				'numberOfMonths' => 1,
+				'uid' => 0)),
+			'oneMonthScrollAllJan' => array(1, 2015, $oneMonthScrollAll, array(
+				'prev' => array('month' => 12, 'year' => 2014), 
+				'next' => array('month' => 2, 'year' => 2015), 
+				'numberOfMonths' => 1,
+				'uid' => 0)),
+			'oneMonthScrollAllDec' => array(12, 2015, $oneMonthScrollAll, array(
+				'prev' => array('month' => 11, 'year' => 2015), 
+				'next' => array('month' => 1, 'year' => 2016), 
+				'numberOfMonths' => 1,
+				'uid' => 0)),
+			'oneMonthScrollAllMar' => array(3, 2015, $oneMonthScrollAll, array(
+				'prev' => array('month' =>  2, 'year' => 2015), 
+				'next' => array('month' => 4, 'year' => 2015), 
+				'numberOfMonths' => 1,
+				'uid' => 0)),
+			'oneMonthScrollOneJan' => array(1, 2015, $oneMonthScrollOne, array(
+				'prev' => array('month' => 12, 'year' => 2014), 
+				'next' => array('month' => 2, 'year' => 2015), 
+				'numberOfMonths' => 1,
+				'uid' => 0)),
+			'oneMonthScrollOneDec' => array(12, 2015, $oneMonthScrollOne, array(
+				'prev' => array('month' => 11, 'year' => 2015), 
+				'next' => array('month' => 1, 'year' => 2016), 
+				'numberOfMonths' => 1,
+				'uid' => 0)),
+			'oneMonthScrollOneMar' => array(3, 2015, $oneMonthScrollOne, array(
+				'prev' => array('month' =>  2, 'year' => 2015), 
+				'next' => array('month' => 4, 'year' => 2015), 
+				'numberOfMonths' => 1,
+				'uid' => 0)),
+			'threeMonthsKeepOneJan' => array(1, 2015, $threeMonthsKeepOne, array(
+				'prev' => array('month' => 11, 'year' => 2014), 
+				'next' => array('month' => 3, 'year' => 2015), 
+				'numberOfMonths' => 3,
+				'uid' => 0)),
+			'threeMonthsKeepOneDec' => array(12, 2015, $threeMonthsKeepOne, array(
+				'prev' => array('month' => 10, 'year' => 2015), 
+				'next' => array('month' => 2, 'year' => 2016), 
+				'numberOfMonths' => 3,
+				'uid' => 0)),
+			'threeMonthsKeepOneMar' => array(3, 2015, $threeMonthsKeepOne, array(
+				'prev' => array('month' =>  1, 'year' => 2015), 
+				'next' => array('month' => 5, 'year' => 2015), 
+				'numberOfMonths' => 3,
+				'uid' => 0)),
+			'threeMonthsScrollAllJan' => array(1, 2015, $threeMonthsScrollAll, array(
+				'prev' => array('month' => 10, 'year' => 2014), 
+				'next' => array('month' => 4, 'year' => 2015), 
+				'numberOfMonths' => 3,
+				'uid' => 0)),
+			'threeMonthsScrollAllDec' => array(12, 2015, $threeMonthsScrollAll, array(
+				'prev' => array('month' =>  9, 'year' => 2015), 
+				'next' => array('month' => 3, 'year' => 2016), 
+				'numberOfMonths' => 3,
+				'uid' => 0)),
+			'threeMonthsScrollAllMar' => array(3, 2015, $threeMonthsScrollAll, array(
+				'prev' => array('month' => 12, 'year' => 2014), 
+				'next' => array('month' => 6, 'year' => 2015), 
+				'numberOfMonths' => 3,
+				'uid' => 0)),
+			'threeMonthsScrollOneJan' => array(1, 2015, $threeMonthsScrollOne, array(
+				'prev' => array('month' => 12, 'year' => 2014), 
+				'next' => array('month' => 2, 'year' => 2015), 
+				'numberOfMonths' => 3,
+				'uid' => 0)),
+			'threeMonthsScrollOneDec' => array(12, 2015, $threeMonthsScrollOne, array(
+				'prev' => array('month' => 11, 'year' => 2015), 
+				'next' => array('month' => 1, 'year' => 2016), 
+				'numberOfMonths' => 3,
+				'uid' => 0)),
+			'threeMonthsScrollOneMar' => array(3, 2015, $threeMonthsScrollOne, array(
+				'prev' => array('month' =>  2, 'year' => 2015), 
+				'next' => array('month' => 4, 'year' => 2015), 
+				'numberOfMonths' => 3,
+				'uid' => 0)),
+			'oneMonthNoPrev' => array(1, 2010, $oneMonthScrollOne, array(
+				'prev' => NULL,
+				'next' => array('month' => 2, 'year' => 2010),
+				'numberOfMonths' => 1,
+				'uid' => 0)),
+			'oneMonthNoNext' => array(1, 2020, $oneMonthScrollOne, array(
+				'prev' => array('month' => 12, 'year' => 2019),
+				'next' => NULL,
+				'numberOfMonths' => 1,
+				'uid' => 0)),
 		);
 	}
 
