@@ -58,6 +58,7 @@ class CmsLayout extends \Tx_News_Hooks_CmsLayout {
 				switch ($actionTranslationKey) {
 					case 'newscal_calendar':
 						$this->getStartingPoint();
+						$this->getTimeRestrictionSetting();
 						$this->getTopNewsRestrictionSetting();
 						$this->getCategorySettings();
 						$this->getArchiveSettings();
