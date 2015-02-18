@@ -1,5 +1,6 @@
 <phpunit backupGlobals="false"
 	backupStaticAttributes="false"
+	bootstrap="../../../../../typo3/sysext/core/Build/UnitTestsBootstrap.php"
 	colors="true"
 	convertErrorsToExceptions="true"
 	convertWarningsToExceptions="true"
@@ -9,14 +10,21 @@
 	stopOnFailure="false"
 	stopOnIncomplete="false"
 	stopOnSkipped="false"
-	strict="false"
 	verbose="false">
 
 	<testsuites>
 		<testsuite name="EXT:cb_newscal tests">
 			<directory>../Unit/</directory>
 		</testsuite>
-
 	</testsuites>
+
+	<filter>
+	  <whitelist processUncoveredFilesFromWhitelist="true">
+	    <directory suffix=".php">../../</directory>
+	    <exclude>
+	      <directory suffix=".php">../Unit/</directory>
+	    </exclude>
+	  </whitelist>
+	</filter>
 
 </phpunit>
