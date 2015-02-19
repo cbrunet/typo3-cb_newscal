@@ -13,14 +13,14 @@
 	verbose="false">
 
 	<testsuites>
-		<testsuite name="EXT:cb_newscal tests">
+		<testsuite name="EXT:cb_newscal unit tests">
 			<directory>../Unit/</directory>
 		</testsuite>
 	</testsuites>
 
 	<filter>
 	  <whitelist processUncoveredFilesFromWhitelist="true">
-	    <directory suffix=".php">../../</directory>
+	    <directory suffix=".php">../../Classes/</directory>
 	    <exclude>
 	      <directory suffix=".php">../Unit/</directory>
 	    </exclude>

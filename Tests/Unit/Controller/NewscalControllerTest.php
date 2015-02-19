@@ -5,6 +5,61 @@ namespace Cbrunet\CbNewscal\Tests\Unit\Controller;
 class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
+	 * Test calendar action
+	 *
+	 * @test
+	 **/
+	public function calendarAction() {
+		$configurationManager = $this->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
+		$configurationManager->method('getConfiguration')
+			->willReturn(array('monthsBefore' => 1, 'monthsAfter' => 2));
+
+		$fixture = $this->getMock(
+			'Cbrunet\\CbNewscal\\Controller\\NewscalController',
+			array('createDemandObject', 'getWeeks', 'createNavigationArray')
+		);
+		$fixture->injectConfigurationManager($configurationManager);
+		$fixture->expects($this->exactly(4))->method('getWeeks');
+
+		$newsRepository = $this->getMock(
+			'Tx_News_Domain_Repository_NewsRepository', array(), array(), '', FALSE
+		);
+		$fixture->injectNewsRepository($newsRepository);
+		$fixture->setView($this->getMock('Tx_Fluid_View_TemplateView', array(), array(), '', FALSE));
+
+
+		$fixture->calendarAction();
+	}
+
+	/**
+	 * Test calendar action (for event)
+	 *
+	 * @test
+	 **/
+	public function calendarActionEvent() {
+		$configurationManager = $this->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
+		$configurationManager->method('getConfiguration')->willReturn(array('dateField' => 'eventStartdate'));
+		$objectManager = $this->getMock('\\TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+		$objectManager->expects($this->once())
+			->method('get')->with('\\Cbrunet\\CbNewscal\\Domain\\Repository\\EventRepository');
+		$newsRepository = $this->getMock(
+			'Tx_News_Domain_Repository_NewsRepository', array(), array(), '', FALSE
+		);
+		$fixture = $this->getAccessibleMock(
+			'Cbrunet\\CbNewscal\\Controller\\NewscalController',
+			array('createDemandObject', 'getWeeks', 'createNavigationArray')
+		);
+
+		$fixture->injectConfigurationManager($configurationManager);
+		$fixture->injectNewsRepository($newsRepository);
+		$fixture->setView($this->getMock('Tx_Fluid_View_TemplateView', array(), array(), '', FALSE));
+		$fixture->_set('objectManager', $objectManager);
+
+
+		$fixture->calendarAction();
+	}
+
+	/**
 	 * Test creation of the demand object against different settings
 	 *
 	 * @test
@@ -46,6 +101,82 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			'relativeMinusOne' => array(array('displayMonth' => '-1'), NULL, date('n', $mo), date('Y', $mo)),
 			'absoluteButOverwrite' => array(array('displayMonth' => '2010-11'), array('month' => 12, 'year' => 2014), 12, 2014),
 		);
+	}
+
+	/**
+	 * Test getWeeks function
+	 *
+	 * @test
+	 * @dataProvider getWeeksDataProvider
+	 * @return void
+	 */
+	public function getWeeks($month, $year, $settings, $expected) {
+		$configurationManager = $this->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
+		$configurationManager->method('getConfiguration')->willReturn($settings);
+
+		$newsRepository = $this->getMockBuilder('Tx_News_Domain_Repository_NewsRepository')
+			->disableOriginalConstructor()
+            ->getMock();
+
+		$mockedController = $this->getAccessibleMock('\\Cbrunet\\CbNewscal\\Controller\\NewscalController', array('dummy'));
+		$mockedController->injectConfigurationManager($configurationManager);
+		$mockedController->injectNewsRepository($newsRepository);
+
+		$d = clone new \Tx_News_Domain_Model_Dto_AdministrationDemand();
+		$weeks = $mockedController->_call('getWeeks', $d, $month, $year);
+
+		$this->assertEquals($expected[0], $weeks[0][0]['day']);
+		$this->assertEquals($expected[1], end(end($weeks))['day']);
+	}
+
+	/**
+	 * Data provider for getWeeks
+	 *
+	 * @return array
+	 */
+	public function getWeeksDataProvider() {
+		return array(
+			'feb2015sun' => array( 2, 2015, array('firstDayOfWeek' => 0), array(1, 28)),
+			'dec2014sun' => array(12, 2014, array('firstDayOfWeek' => 0), array(30, 3)),
+		);
+	}
+
+	/**
+	 * Test getWeeks with event. Verify start and end ev flags.
+	 *
+	 * @test
+	 **/
+	public function getWeekStartEndEv() {
+		$settings = array(
+			'firstDayOfWeek' => 0,
+			'dateField' => 'eventStartdate'
+		);
+
+		$event = $this->getMock('\\Cbrunet\\CbNewscal\\Domain\\Model\\Event');
+		$event->method('getEventStartdate')->willReturn(new \DateTime('2014-12-24'));
+		$event->method('getEventEnddate')->willReturn(new \DateTime('2014-12-26'));
+
+		$configurationManager = $this->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
+		$configurationManager->method('getConfiguration')->willReturn($settings);
+
+		$newsRepository = $this->getMockBuilder('Tx_News_Domain_Repository_NewsRepository')
+			->disableOriginalConstructor()
+            ->getMock();
+        $newsRepository->method('findDemanded')->willReturn(array($event));
+
+		$mockedController = $this->getAccessibleMock('\\Cbrunet\\CbNewscal\\Controller\\NewscalController', array('dummy'));
+		$mockedController->injectConfigurationManager($configurationManager);
+		$mockedController->injectNewsRepository($newsRepository);
+
+		$d = clone new \Tx_News_Domain_Model_Dto_AdministrationDemand();
+		$weeks = $mockedController->_call('getWeeks', $d, 12, 2014);
+
+		$this->assertTrue($weeks[3][3]['startev']);  // 24
+		$this->assertFalse($weeks[3][3]['endev']);  // 24
+		$this->assertFalse($weeks[3][4]['startev']);  // 25
+		$this->assertFalse($weeks[3][4]['endev']);  // 25
+		$this->assertFalse($weeks[3][5]['startev']);  // 26
+		$this->assertTrue($weeks[3][5]['endev']);  // 26
 	}
 
 
