@@ -66,7 +66,6 @@ class CmsLayout extends \Tx_News_Hooks_CmsLayout {
 						$this->getListPidSetting();
 						$this->getTagRestrictionSetting();
 						break;
-					default:
 				}
 
 				// for all views
