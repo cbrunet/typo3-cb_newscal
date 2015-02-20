@@ -51,7 +51,7 @@
 .newscal table.calendar td.day6, .newscal table.calendar td.day7 {
   background: #eee;
 }
-.newscal table.calendar td.today {
+.newscal table.calendar td.today .day, .newscal table.calendar td.today.hasevents .day {
   font-weight: bold;
   color: red;
 }

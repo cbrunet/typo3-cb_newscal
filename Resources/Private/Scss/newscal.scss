@@ -68,9 +68,11 @@ $paddingevout: 4px;
 		td.day6, td.day7 {
 			background: #eee;
 		}
-		td.today {
-			font-weight: bold;
-			color: red;
+		td.today, td.today.hasevents {
+			.day {
+				font-weight: bold;
+				color: red;
+			}
 		}
 		td.hasevents {
 			.day {
