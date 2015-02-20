@@ -37,6 +37,10 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 **/
 	public function calendarActionEvent() {
+		if (!\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('roq_newsevent')) {
+			$this->markTestSkipped('The roq_newsevent extension is not available.');
+		}
+
 		$configurationManager = $this->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
 		$configurationManager->method('getConfiguration')->willReturn(array('dateField' => 'eventStartdate'));
 		$objectManager = $this->getMock('\\TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
@@ -147,6 +151,10 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 **/
 	public function getWeekStartEndEv() {
+		if (!\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('roq_newsevent')) {
+			$this->markTestSkipped('The roq_newsevent extension is not available.');
+		}
+
 		$settings = array(
 			'firstDayOfWeek' => 0,
 			'dateField' => 'eventStartdate'
