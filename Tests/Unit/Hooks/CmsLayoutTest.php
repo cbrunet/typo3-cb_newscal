@@ -2,23 +2,22 @@
 
 namespace Cbrunet\CbNewscal\Tests\Unit\Hooks;
 
-class CmsLayoutTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class CmsLayoutTest extends \Cbrunet\CbNewscal\Tests\Unit\UnitTestCase {
 
 	public function setUp() {
-		$db = $this->getAccessibleMock('TYPO3\\CMS\\Dbal\\Database\\DatabaseConnection',
-			array('getFieldInfoCache', 'fullQuoteStr', 'exec_SELECTgetSingleRow',
-				  'exec_DELETEquery', 'exec_INSERTquery', 'exec_SELECTgetRows'),
-			array(), '', FALSE);
-		$mockCacheFrontend = $this->getMock('TYPO3\\CMS\\Core\\Cache\\Frontend\\PhpFrontend', array(), array(), '', FALSE);
-		$db->expects($this->any())->method('getFieldInfoCache')->will($this->returnValue($mockCacheFrontend));
-		$GLOBALS['TYPO3_DB'] = $db;
-
+		$this->mockDatabase();
+		
 		$lang = $this->getMock('TYPO3\\CMS\\Lang\\LanguageService');
 		$lang->expects($this->any())->method('sL')->willReturn('translation');
 		$GLOBALS['LANG'] = $lang;
 
 		$this->fixture = $this->getMock('\\Cbrunet\\CbNewscal\\Hooks\\CmsLayout',
 			array('getFieldFromFlexform', 'getStartingPoint', 'getCategorySettings'));
+	}
+
+	public function tearDown() {
+		$this->cleanupDatabase();
+		unset($this->fixture);
 	}
 
 	/**
