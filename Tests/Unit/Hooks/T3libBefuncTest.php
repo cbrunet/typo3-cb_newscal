@@ -40,6 +40,7 @@ class T3libBefuncTest extends \Cbrunet\CbNewscal\Tests\Unit\UnitTestCase {
 		$this->assertNull($params['dataStructure']['sheets']['additional']['ROOT']['el']['settings.offset']);
 		$this->assertNull($params['dataStructure']['sheets']['additional']['ROOT']['el']['settings.excludeAlreadyDisplayedNews']);
 		$this->assertNull($params['dataStructure']['sheets']['additional']['ROOT']['el']['settings.disableOverrideDemand']);
+		$this->assertNull($params['dataStructure']['sheets']['additional']['ROOT']['el']['settings.list.paginate.itemsPerPage']);
 		
 		$this->assertNull($params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][0]);
 		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('roq_newsevent')) {
