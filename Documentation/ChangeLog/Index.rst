@@ -12,7 +12,12 @@ ChangeLog
 =========
 
 1.2.0:
+  - Possibility to use fields from roq_newsevent_ [`issue 4`_]
+  - Honor time limit fields [`issue 5`_]
   - Fixed an incompatibility with older PHP versions (thanks to Marco Antonioli) [`issue 7`_]
+  - Unit and functional tests
+  - Refactoring of the controller
+  - Tested compatibility with news_ 3.1.0 and TYPO3 7.0
 
 1.1.1: 2015-01-21
   - Fix bug which prevent displaying two events on the same day (thanks to Carsten Hager) [`issue 6`_]
@@ -32,9 +37,13 @@ ChangeLog
 .. _issue 1: https://github.com/cbrunet/typo3-cb_newscal/issues/1
 .. _issue 2: https://github.com/cbrunet/typo3-cb_newscal/issues/2
 .. _issue 3: https://github.com/cbrunet/typo3-cb_newscal/issues/3
+.. _issue 4: https://github.com/cbrunet/typo3-cb_newscal/issues/4
+.. _issue 5: https://github.com/cbrunet/typo3-cb_newscal/issues/5
 .. _issue 6: https://github.com/cbrunet/typo3-cb_newscal/issues/6
 .. _issue 7: https://github.com/cbrunet/typo3-cb_newscal/issues/7
 
+.. _news: http://typo3.org/extensions/repository/view/news
+.. _roq_newsevent: http://typo3.org/extensions/repository/view/roq_newsevent
 
 
 Acknowledgments

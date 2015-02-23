@@ -74,7 +74,7 @@ Customizing templates
 The easiest way to customize the template used for rendering the calendar is
 to specify an additional path in the *plugin.tx_news.view.templateRootPaths*
 array. Array item 100 is the default template path for the news_ extension,
-and array item 99 is the default template path for cb_calnews extension.
+and array item 99 is the default template path for cb_newscal extension.
 Therefore, items with index greater than 100 will replace defined paths. Under
 the news specified path, the used template should be called *Calendar.html*
 and located inside the *Newscal* folder.
@@ -96,132 +96,67 @@ The following variables are accessible from the Fluid template.
 
 settings
   The array of settings, configured in TypoScript or in the plugin flexform.
-calendars
+months
   The list of calendars to display.
-demand
-  The news demand object for the plugin.
-navigation.monthsToScroll
-  Number of months needed to scroll backward or forward when navigating through months,
-  according to *plugin.tx_news.settings.scrollMode* setting.
-navigation.numberOfMonths
-  Total number of displayed months.
-navigation.uid
-  uid of the displayed plugin content object.
+navigation
+  An array containing information for generation navigation arrows.
 
+**months** is an array. Each item of that array is an array containing
+the following variables:
 
-Each calendar in the *calendars* array contains the following variables:
-
-news
-  The list of news to display.
-demand
-  The news demand object for the current calendar.
+month
+  Month number (e.g. 1 for January, 12 for December) of the given calendar
+year
+  Year of the given calendar.
 curmonth
-  A boolean value that is TRUE if the calendar is the one specified by the demand object.
-  It is FALSE for calendars of the other months, that are before or after the current month.
-
-
-ViewHelpers
------------
-
-ViewHelpers are located under the *Cbrunet\CbNewscal\ViewHelpers* namespace.
-
-Calendar
-^^^^^^^^
-
-This ViewHelper provides an array used to iterate through weeks and days of the given month.
-
-
-.. code-block:: html
-
-   {namespace c=Cbrunet\CbNewscal\ViewHelpers}
-
-   <c:calendar newsList="{news}" year="{demand.year}" month="{demand.month}"
-               firstDayOfWeek="{settings.firstDayOfWeek}">
-
-   </c:calendar>
-
-
-Arguments
-"""""""""
-
-newsList
-  The list of news to display.
-year
-  (optional) The year to display. If not specified, the current year is used.
-month
-  (optional) The month to display. If not specified, the current month is used.
-firstDayOfWeek
-  (optional) The first day of the week (0 for Sunday, 1 for Monday; default: 0).
-
-
-Variables inside the ViewHelper
-"""""""""""""""""""""""""""""""
-
-The following variables are accessible inside the ViewHelper.
-
+  True if this month is the current month. If only one month is displayed,
+  this is always true. If more than one month is displayed, this is true
+  for the month related to the current demand.
 weeks
-  The array of the weeks. Each item is an array of the days of the week.
-weeks.*0*.ts
-  Timestamp corresponding to the day.
-weeks.*0*.day
-  Day of the month
-weeks.*0*.month
-  Month for this day (1 - 12).
-weeks.*0*.curmonth
-  True is the day belongs to the current month, false otherwise.
-weeks.*0*.curday
-  True is the day is the current day, false otherwise.
-weeks.*0*.news
-  Array of the news related to the current day.
+  The array containing the weeks of this calendar.
 
+**weeks** contains, for each week, an array of days. Each day
+is itself an array, containing:
 
-OffsetMonth
-^^^^^^^^^^^
-
-This ViewHelper allow to calculate month and year corresponding to *offset* months
-before or after the current month. 
-
-Arguments
-"""""""""
-
-year
-  Current year.
+ts
+  Timestamp of the day.
+day
+  Day of the month (1 to 31)
 month
-  Current month.
-offset
-  Number of months to offset. Positive number for months after, negative number for months before.
-  For instance, offset = 1 is the next month, and offset = -1 is the previous month.
+  Month (beause the day could belong to the previous or the next month as well).
+curmonth
+  True if the day belongs to the curently displayed month (useful for graying
+  out days of previous or next month).
+curday
+  True if the day is today.
+startev
+  True is the day indicates the start of an event. If roq_newsevent is not
+  used, this is always true.
+endev
+  True if the day indicates the end of an event. If roq_newsevent is not
+  used, this is always true.
+news
+  The array of news related to this day. Empty if no news are available
+  for this day.
 
-Variables inside the ViewHelper
-"""""""""""""""""""""""""""""""
+Each item of the **news** array are *news* (or *event*) objects. 
 
-The following variables are accessible inside the ViewHelper.
 
-month
-  Offset month.
-year
-  Offset year.
+The **navigation** array contains the following values:
 
-Example
-"""""""
-.. code-block:: html
-
-   {namespace c=Cbrunet\CbNewscal\ViewHelpers}
-
-   <c:offsetMonth month="{demand.month}" year="{demand.year}" offset="-1">
-      <f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
-                     title="{f:translate(id: 'month.{month}', extensionName: 'news')} {year}"
-                     section="c{uid}">
-        Previous month
-      </f:link.action>
-   </c:offsetMonth>
-   <c:offsetMonth month="{demand.month}" year="{demand.year}" offset="1">
-      <f:link.action arguments="{overwriteDemand:{year: year, month: month}}"
-                     title="{f:translate(id: 'month.{month}', extensionName: 'news')} {year}"
-                     section="c{uid}">
-        Next month
-      </f:link.action>
-   </c:offsetMonth>
+numberOfMonths
+  Contain the number of displayed months.
+uid
+  Uid of the plugin content object. Used for anchoring to the calendar
+  when navigation through months.
+next
+  **next.month** and **next.year** contain month and year of the next
+  month to navigate to. **next** is Null if no navigation is possible
+  (because of time limit constraint).
+prev
+  **prev.month** and **prev.year** contain month and year of the previous
+  month to navigate to. **prev** is Null if no navigation is possible
+  (because of time limit constraint).
 
 
 Internationalization
@@ -231,7 +166,9 @@ Translations for this extension are stored in xlf files, just like other TYPO3 e
 However, many strings a taken directly from the news_ extension, while a few specific strings
 are stored in the cb_newscal extension.
 
-Extension is written in English, and French translations are provided. 
+Extension is written in English, and French, Catalan,
+and Castillan (Spanish) translations are provided. If you would like to provide
+other translations, please create a pull request on GitHub_.
 
 To replace default provided translations, or to provide your own translations,
 simply copy the needed files that are located in `Resources/Private/Language/`
@@ -252,3 +189,4 @@ See `Xavier Perseguers blog`_ for more details about translations in TYPO3.
 
 .. _news: http://typo3.org/extensions/repository/view/news
 .. _Xavier Perseguers blog: http://xavier.perseguers.ch/tutoriels/typo3/articles/managing-localization-files.html#c962
+.. _GitHub: https://github.com/cbrunet/typo3-cb_newscal
