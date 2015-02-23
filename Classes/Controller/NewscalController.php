@@ -118,7 +118,7 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 						if ($event->getEventStartdate()->format('Y-m-d') < $cd) {
 							$day['startev'] = False;
 						}
-						if ($event->getEventEnddate() !== NULL) {
+						if ($event->getEventEnddate()) {
 							if ($event->getEventEnddate()->format('Y-m-d') > $cd) {
 								$day['endev'] = False;
 							}

@@ -25,7 +25,7 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			'Tx_News_Domain_Repository_NewsRepository', array(), array(), '', FALSE
 		);
 		$fixture->injectNewsRepository($newsRepository);
-		$fixture->setView($this->getMock('Tx_Fluid_View_TemplateView', array(), array(), '', FALSE));
+		$fixture->setView($this->getMock('TYPO3\\CMS\\Fluid\\View\\TemplateView', array(), array(), '', FALSE));
 
 
 		$fixture->calendarAction();
@@ -43,7 +43,7 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 		$configurationManager = $this->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
 		$configurationManager->method('getConfiguration')->willReturn(array('dateField' => 'eventStartdate'));
-		$objectManager = $this->getMock('\\TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+		$objectManager = $this->getMock('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 		$objectManager->expects($this->once())
 			->method('get')->with('\\Cbrunet\\CbNewscal\\Domain\\Repository\\EventRepository');
 		$newsRepository = $this->getMock(
@@ -74,7 +74,7 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$configurationManager = $this->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
 		$configurationManager->method('getConfiguration')->willReturn($settings);
 
-		$mockedController = $this->getAccessibleMock('\\Cbrunet\\CbNewscal\\Controller\\NewscalController',
+		$mockedController = $this->getAccessibleMock('Cbrunet\\CbNewscal\\Controller\\NewscalController',
 			array('createDemandObjectFromSettings'));
 		$mockedController->injectConfigurationManager($configurationManager);
 
@@ -122,7 +122,7 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			->disableOriginalConstructor()
             ->getMock();
 
-		$mockedController = $this->getAccessibleMock('\\Cbrunet\\CbNewscal\\Controller\\NewscalController', array('dummy'));
+		$mockedController = $this->getAccessibleMock('Cbrunet\\CbNewscal\\Controller\\NewscalController', array('dummy'));
 		$mockedController->injectConfigurationManager($configurationManager);
 		$mockedController->injectNewsRepository($newsRepository);
 
@@ -160,7 +160,7 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			'dateField' => 'eventStartdate'
 		);
 
-		$event = $this->getMock('\\Cbrunet\\CbNewscal\\Domain\\Model\\Event');
+		$event = $this->getMock('Cbrunet\\CbNewscal\\Domain\\Model\\Event');
 		$event->method('getEventStartdate')->willReturn(new \DateTime('2014-12-24'));
 		$event->method('getEventEnddate')->willReturn(new \DateTime('2014-12-26'));
 
@@ -240,7 +240,7 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$configurationManager = $this->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
 		$configurationManager->method('getConfiguration')->willReturn($settings);
 
-		$mockedController = $this->getAccessibleMock('\\Cbrunet\\CbNewscal\\Controller\\NewscalController', array('dummy'));
+		$mockedController = $this->getAccessibleMock('Cbrunet\\CbNewscal\\Controller\\NewscalController', array('dummy'));
 		$mockedController->_set('month', $month);
 		$mockedController->_set('year', $year);
 		$mockedController->injectConfigurationManager($configurationManager);

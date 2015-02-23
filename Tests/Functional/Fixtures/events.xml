@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+	<tx_news_domain_model_news>
+		<pid>1</pid>
+		<title>event 1</title>
+		<tx_roqnewsevent_is_event>1</tx_roqnewsevent_is_event>
+		<tx_roqnewsevent_startdate>1423890000</tx_roqnewsevent_startdate> <!-- 2015-02-14 -->
+	</tx_news_domain_model_news>
+	<tx_news_domain_model_news>
+		<pid>1</pid>
+		<title>event 2</title>
+		<tx_roqnewsevent_is_event>1</tx_roqnewsevent_is_event>
+		<tx_roqnewsevent_startdate>1424840400</tx_roqnewsevent_startdate> <!-- 2015-02-25 -->
+		<tx_roqnewsevent_starttime>36000</tx_roqnewsevent_starttime> <!-- 10:00 -->
+		<tx_roqnewsevent_enddate>1424840400</tx_roqnewsevent_enddate> <!-- 2015-02-25 -->
+		<tx_roqnewsevent_endtime>43200</tx_roqnewsevent_endtime> <!-- 12:00 -->
+	</tx_news_domain_model_news>
+	<tx_news_domain_model_news>
+		<pid>1</pid>
+		<title>event 3</title>
+		<tx_roqnewsevent_is_event>1</tx_roqnewsevent_is_event>
+		<tx_roqnewsevent_startdate>1424149200</tx_roqnewsevent_startdate> <!-- 2015-02-17 -->
+		<tx_roqnewsevent_enddate>1424235600</tx_roqnewsevent_enddate> <!-- 2015-02-18 -->
+	</tx_news_domain_model_news>
+	<tx_news_domain_model_news>
+		<pid>1</pid>
+		<title>event 4</title>
+		<tx_roqnewsevent_is_event>1</tx_roqnewsevent_is_event>
+		<tx_roqnewsevent_startdate>1422594000</tx_roqnewsevent_startdate> <!-- 2015-01-30 -->
+		<tx_roqnewsevent_enddate>1422766800</tx_roqnewsevent_enddate> <!-- 2015-02-01 -->
+	</tx_news_domain_model_news>
+	<tx_news_domain_model_news>
+		<pid>1</pid>
+		<title>event 5</title>
+		<tx_roqnewsevent_is_event>1</tx_roqnewsevent_is_event>
+		<tx_roqnewsevent_startdate>1425099600</tx_roqnewsevent_startdate> <!-- 2015-02-28 -->
+		<tx_roqnewsevent_enddate>1425272400</tx_roqnewsevent_enddate> <!-- 2015-03-02 -->
+	</tx_news_domain_model_news>
+</dataset>

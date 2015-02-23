@@ -114,9 +114,15 @@ class EventRepository extends \Tx_RoqNewsevent_Domain_Repository_EventRepository
                 $begin = mktime(0, 0, 0, 1, 1, $demand->getYear());
                 $end = mktime(23, 59, 59, 12, 31, $demand->getYear());
             }
-            $constraints[] = $query->logicalAnd(
-                $query->greaterThanOrEqual('tx_roqnewsevent_enddate + tx_roqnewsevent_endtime', $begin),
-                $query->lessThanOrEqual('tx_roqnewsevent_startdate + tx_roqnewsevent_starttime', $end)
+            $constraints[] = $query->logicalOr(
+                $query->logicalAnd(
+                    $query->greaterThanOrEqual('tx_roqnewsevent_enddate', $begin),
+                    $query->lessThanOrEqual('tx_roqnewsevent_startdate', $end)
+                ),
+                $query->logicalAnd(
+                    $query->equals('tx_roqnewsevent_startdate', $begin),
+                    $query->equals('tx_roqnewsevent_enddate', 0)
+                )
             );
         }
 

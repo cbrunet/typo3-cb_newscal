@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+	<tx_news_domain_model_news>
+		<pid>1</pid>
+		<title>case 1</title>
+		<crdate>1424347200</crdate>     <!-- 2015-02-19 12:00 -->
+		<tstamp>1424433600</tstamp>     <!-- 2015-02-20 12:00 -->
+		<datetime>1424520000</datetime> <!-- 2015-02-21 12:00 -->
+		<archive>1424649600</archive>   <!-- 2015-02-22 -->
+	</tx_news_domain_model_news>
+
+	<tx_news_domain_model_news>
+		<pid>1</pid>
+		<title>case 2</title>
+		<crdate>1422784800</crdate>     <!-- 2015-02-1 10:00 -->
+		<tstamp>1422784800</tstamp>     <!-- 2015-02-1 10:00 -->
+		<datetime>1423926000</datetime> <!-- 2015-02-14 15:00 -->
+		<archive></archive>             <!--  -->
+	</tx_news_domain_model_news>
+	<tx_news_domain_model_news>
+		<pid>1</pid>
+		<title>case 3</title>
+		<crdate>1422788400</crdate>     <!-- 2015-02-1 11:00 -->
+		<tstamp>1422788400</tstamp>     <!-- 2015-02-1 11:00 -->
+		<datetime>1423753200</datetime> <!-- 2015-02-12 15:00 -->
+		<archive></archive>             <!--  -->
+	</tx_news_domain_model_news>
+	<tx_news_domain_model_news>
+		<pid>1</pid>
+		<title>case 4</title>
+		<crdate>1422792000</crdate>     <!-- 2015-02-1 12:00 -->
+		<tstamp>1422792000</tstamp>     <!-- 2015-02-1 12:00 -->
+		<datetime>1423839600</datetime> <!-- 2015-02-13 15:00 -->
+		<archive></archive>             <!--  -->
+		<istopnews>1</istopnews>
+	</tx_news_domain_model_news>
+</dataset>
