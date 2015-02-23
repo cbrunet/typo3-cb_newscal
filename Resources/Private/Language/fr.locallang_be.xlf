@@ -15,6 +15,10 @@
                 <source>Months to display after</source>
                 <target>Mois suivants à afficher</target>
             </trans-unit>
+            <trans-unit id="flexforms_general.orderBy.eventStartdate" xml:space="preserve">
+                <source>Event dates</source>
+                <target>Dates des événements</target>
+            </trans-unit>
             <trans-unit id="constants.firstDayOfWeek" xml:space="preserve">
                 <source>First day of the week: Day for the first column displayed in the Calendar (default: Sunday)</source>
                 <target>Premier jour de la semaine: Jour à afficher pour la première colonne du calendrier (défaut: dimanche)</target>
