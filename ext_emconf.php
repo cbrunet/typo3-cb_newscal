@@ -9,12 +9,12 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Display news as calendar of the month.',
 	'author' => 'Charles Brunet',
 	'author_email' => 'charles@cbrunet.net',
-	'state' => 'beta',
+	'state' => 'stable',
 	'internal' => '',
 	'uploadfolder' => '0',
 	'createDirs' => '',
 	'clearCacheOnLoad' => 0,
-	'version' => '1.2.0',
+	'version' => '1.2.1',
 	'constraints' => array(
 		'depends' => array(
 			'typo3' => '6.2.0-7.99.99',
@@ -23,7 +23,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'conflicts' => array(
 		),
 		'suggests' => array(
-			'roq_newsevent' => '3.0.0-3.0.99'
+			'roq_newsevent' => '3.0.0-3.1.99'
 		),
 	),
 );

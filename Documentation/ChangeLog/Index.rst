@@ -11,6 +11,9 @@
 ChangeLog
 =========
 
+1.2.1:
+  - Verified compatibility with row_newsevent_ 3.1.0
+
 1.2.0:
   - Possibility to use fields from roq_newsevent_ [`issue 4`_]
   - Honor time limit fields [`issue 5`_]
