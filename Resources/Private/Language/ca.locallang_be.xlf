@@ -1,20 +1,56 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="ca" datatype="plaintext" original="messages" date="2014-12-02T14:53:53Z" product-name="cb_newscal">
-		<header/>
-		<body>
-			<trans-unit id="flexforms_general.displayMonth" xml:space="preserve">
+    <file source-language="ca" datatype="plaintext" original="messages" date="2014-12-02T14:53:53Z" product-name="cb_newscal">
+        <header/>
+        <body>
+            <trans-unit id="flexforms_general.displayMonth" xml:space="preserve">
                 <source>Month to display (empty for current month, yyyy-mm for specific month, or +n or -n for relative offset)</source>
                 <target>Mes a mostrar (en blanc per al mes actual, yyyy-mm per a especificar el mes, o +n o -n per a un offset relatiu)</target>
             </trans-unit>
-			<trans-unit id="flexforms_general.monthsBefore" xml:space="preserve">
+            <trans-unit id="flexforms_general.monthsBefore" xml:space="preserve">
                 <source>Months to display before</source>
                 <target>Mesos a mostrar abans</target>
             </trans-unit>
-			<trans-unit id="flexforms_general.monthsAfter" xml:space="preserve">
+            <trans-unit id="flexforms_general.monthsAfter" xml:space="preserve">
                 <source>Months to display after</source>
                 <target>Mesos a mostrar després</target>
             </trans-unit>
-		</body>
-	</file>
+            <trans-unit id="flexforms_general.orderBy.eventStartdate" xml:space="preserve">
+                <source>Event dates</source>
+                <target>Dates de l'esdeveniment</target>
+            </trans-unit>
+            <trans-unit id="constants.firstDayOfWeek" xml:space="preserve">
+                <source>First day of the week: Day for the first column displayed in the Calendar (default: Sunday)</source>
+                <target>Primer dia de la setmana: Dia per a la primera columna mostrada al calendari (per defecte: Diumenge)</target>
+            </trans-unit>
+            <trans-unit id="constants.scrollMode" xml:space="preserve">
+                <source>Scroll mode: Determine the way the navigation works. All but one (-1, default) shows one overlapping month between sets, All (0) shows non-overlapping sets of months, and One (1) scroll one month each time.</source>
+                <target>Mode de desplaçament: Especifica com funciona la navegació. Tots menys un (-1, per defecte) desplaça tots els mesos menys un, Tots (0) desplaça tots els mesos, i Un (1) desplaça un mes cada cop</target>
+            </trans-unit>
+            <trans-unit id="constants.scrollMode.-1" xml:space="preserve">
+                <source>All but one</source>
+                <target>Tots menys un</target>
+            </trans-unit>
+            <trans-unit id="constants.scrollMode.0" xml:space="preserve">
+                <source>All</source>
+                <target>Tots</target>
+            </trans-unit>
+            <trans-unit id="constants.scrollMode.1" xml:space="preserve">
+                <source>One</source>
+                <target>Un</target>
+            </trans-unit>
+            <trans-unit id="constants.view.layoutRootPath" xml:space="preserve">
+                <source>Path to template layouts (FE)</source>
+                <target>Ruta als dissenys de plantilles (FE)</target>
+            </trans-unit>
+            <trans-unit id="constants.view.partialRootPath" xml:space="preserve">
+                <source>Path to template partials (FE)</source>
+                <target>Ruta als parcials de plantilles (FE)</target>
+            </trans-unit>
+            <trans-unit id="constants.view.templateRootPath" xml:space="preserve">
+                <source>Path to templates (FE)</source>
+                <target>Ruta a les plantilles (FE)</target>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>
