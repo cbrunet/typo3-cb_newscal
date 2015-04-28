@@ -11,10 +11,11 @@
 ChangeLog
 =========
 
-1.2.1:
+1.2.1: 2015-04-28
   - Verified compatibility with row_newsevent_ 3.1.0
+  - Upgraded language files for Catalan and Castillan
 
-1.2.0:
+1.2.0: 2015-02-27
   - Possibility to use fields from roq_newsevent_ [`issue 4`_]
   - Honor time limit fields [`issue 5`_]
   - Fixed an incompatibility with older PHP versions (thanks to Marco Antonioli) [`issue 7`_]
