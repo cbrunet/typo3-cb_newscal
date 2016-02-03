@@ -30,12 +30,12 @@ namespace Cbrunet\CbNewscal\Hooks;
  * Hook to display verbose information about the plugin
  *
  */
-class CmsLayout extends \Tx_News_Hooks_CmsLayout {
+class PageLayoutView extends \GeorgRinger\News\Hooks\PageLayoutView {
 
 	public function getExtensionSummary(array $params) {
 		$result = $actionTranslationKey = '';
 
-		if ($params['row']['list_type'] == self::KEY . '_pi1') {
+		if ($params['row']['list_type'] == 'news_pi1') {
 			$this->flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($params['row']['pi_flexform']);
 
 			// if flexform data is found
@@ -56,7 +56,7 @@ class CmsLayout extends \Tx_News_Hooks_CmsLayout {
 			if (is_array($this->flexformData)) {
 
 				switch ($actionTranslationKey) {
-					case 'newscal_calendar':
+					case 'news_calendar':
 						$this->getStartingPoint();
 						$this->getTimeRestrictionSetting();
 						$this->getTopNewsRestrictionSetting();

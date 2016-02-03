@@ -2,7 +2,7 @@
 
 namespace Cbrunet\CbNewscal\Hooks;
 
-class T3libBefunc extends \Tx_News_Hooks_T3libBefunc {
+class BackendUtility extends \GeorgRinger\News\Hooks\BackendUtility {
 
     protected $currentMonth = <<<EOT
                     <settings.displayMonth>
@@ -45,12 +45,35 @@ EOT;
                     </settings.monthsAfter>
 EOT;
 
+    protected $eventRestrictionField = '<settings.eventRestriction>
+                        <TCEforms>
+                            <label>LLL:EXT:eventnews/Resources/Private/Language/locallang.xlf:flexforms_general.eventRestriction</label>
+                            <config>
+                                <type>select</type>
+                                <items>
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">LLL:EXT:news/Resources/Private/Language/locallang_be.xlf:flexforms_general.no-constraint</numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                    <numIndex index="1">
+                                        <numIndex index="0">LLL:EXT:eventnews/Resources/Private/Language/locallang.xlf:flexforms_general.eventRestriction.1</numIndex>
+                                        <numIndex index="1">1</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2">
+                                        <numIndex index="0">LLL:EXT:eventnews/Resources/Private/Language/locallang.xlf:flexforms_general.eventRestriction.2</numIndex>
+                                        <numIndex index="1">2</numIndex>
+                                    </numIndex>
+                                </items>
+                            </config>
+                        </TCEforms>
+                    </settings.eventRestriction>';
+
     /**
      * Remove unused fields in the flexform.
      */
     public function updateFlexforms(&$params, &$reference) {
         switch ($params['selectedView']) {
-            case 'Newscal->calendar':
+            case 'News->calendar':
                 $this->updateCalendarFlexforms($params, $reference);
                 break;
         }
@@ -68,10 +91,6 @@ EOT;
         $params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][] = array('LLL:EXT:news/Resources/Private/Language/locallang_be.xml:flexforms_general.orderBy.tstamp', 'tstamp');
         $params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][] = array('LLL:EXT:news/Resources/Private/Language/locallang_be.xml:flexforms_general.orderBy.crdate', 'crdate');
 
-        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('roq_newsevent')) {
-            $params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][] = array('LLL:EXT:cb_newscal/Resources/Private/Language/locallang_be.xml:flexforms_general.orderBy.eventStartdate', 'eventStartdate');
-        }
-
         $displayMonth = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($this->currentMonth);
         $params['dataStructure']['sheets']['sDEF']['ROOT']['el'] = array_slice($params['dataStructure']['sheets']['sDEF']['ROOT']['el'], 0, 1, true) +
                                                                    array('settings.displayMonth' => $displayMonth) +
@@ -85,5 +104,11 @@ EOT;
         }
         $params['dataStructure']['sheets']['template']['ROOT']['el'] = array_merge(array('settings.monthsBefore' => $monthsBefore, 'settings.monthsAfter' => $monthsAfter),
             $params['dataStructure']['sheets']['template']['ROOT']['el']);
+
+        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('eventnews')) {
+            $eventRestrictionXml = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($this->eventRestrictionField);
+            $params['dataStructure']['sheets']['sDEF']['ROOT']['el'] = $params['dataStructure']['sheets']['sDEF']['ROOT']['el'] + array(
+                    'settings.eventRestriction' => $eventRestrictionXml);
+        }
     }
 }

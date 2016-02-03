@@ -14,16 +14,16 @@ $EM_CONF[$_EXTKEY] = array(
 	'uploadfolder' => '0',
 	'createDirs' => '',
 	'clearCacheOnLoad' => 0,
-	'version' => '1.2.1',
+	'version' => '2.0.0',
 	'constraints' => array(
 		'depends' => array(
 			'typo3' => '6.2.0-7.99.99',
-			'news' => '3.0.0-3.1.99',
+			'news' => '3.2.0-4.1.99',
 		),
 		'conflicts' => array(
 		),
 		'suggests' => array(
-			'roq_newsevent' => '3.0.0-3.1.99'
+			'eventnews' => '1.0.2-1.0.99'
 		),
 	),
 );

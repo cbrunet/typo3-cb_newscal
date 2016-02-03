@@ -2,15 +2,13 @@
 
 namespace Cbrunet\CbNewscal\Controller;
 
-class NewscalController extends \Tx_News_Controller_NewsController {
+class NewsController extends \GeorgRinger\News\Controller\NewsController {
 
-	/**
-	 * @var Tx_News_Domain_Repository_NewsRepository
-	 */
-	protected $newsRepository;
 
 	protected $year;
 	protected $month;
+
+	protected $events;
 
 
 	/**
@@ -20,10 +18,6 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 	 * @return void
 	 */
 	public function calendarAction(array $overwriteDemand = NULL) {
-		if ($this->settings['dateField'] == 'eventStartdate') {
-			$this->newsRepository = $this->objectManager->get('\\Cbrunet\\CbNewscal\\Domain\\Repository\\EventRepository');
-		}
-
 		$months = array();
 		$demand = $this->createDemandObject($overwriteDemand);
 		$monthsBefore = (int)$this->settings['monthsBefore'];
@@ -51,7 +45,13 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 		$this->year = (int)date('Y');
 		$this->month = (int)date('n');
 
-		$demand = $this->createDemandObjectFromSettings($this->settings);
+
+        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('eventnews')) {
+			$demand = $this->createDemandObjectFromSettings($this->settings, 'GeorgRinger\\Eventnews\\Domain\\Model\\Dto\\Demand');
+		}
+		else {
+			$demand = $this->createDemandObjectFromSettings($this->settings);
+		}
 		if ($overwriteDemand !== NULL) {
 			$demand = $this->overwriteDemandObject($demand, $overwriteDemand);
 		}
@@ -89,6 +89,87 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 		return $demand;
 	}
 
+	protected function getEventsOfDay($demand, &$day)
+	{
+		if (!isset($this->events[$day['year']]))
+			$this->events[$day['year']] = array();
+		if (!isset($this->events[$day['year']][$day['month']]))
+		{
+			$demand->setYear($day['year']);
+			$demand->setMonth($day['month']);
+			$this->events[$day['year']][$day['month']] = $this->newsRepository->findDemanded($demand);
+		}
+
+		$day['startev'] = True;
+		$day['endev'] = True;
+		$day['news'] = array();
+		foreach ($this->events[$day['year']][$day['month']] as $k => $event)
+		{
+			switch ($demand->getDateField())
+			{
+				case 'datetime':
+        			if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('eventnews'))
+        			{
+        				if ($event->getEventEnd())
+        				{
+        					if ($event->getDatetime()->format('Y-m-d') <= $day['cd'] &&
+        						$event->getEventend()->format('Y-m-d') >= $day['cd'] )
+        					{
+        						$day['news'][] = $event;
+        						if ($event->getDatetime()->format('Y-m-d') < $day['cd'])
+        						{
+        							$day['startev'] = False;
+        						}
+        						if ($event->getEventend()->format('Y-m-d') > $day['cd'])
+        						{
+        							$day['endev'] = False;
+        						}
+        						else
+        						{
+									unset($this->events[$day['year']][$day['month']][$k]);
+        						}
+        					}
+        					continue 2;  // next loop iteration
+        				}
+        			}
+
+
+					if ($event->getDatetime()->format('Y-m-d') == $day['cd'])
+					{
+						$day['news'][] = $event;
+						unset($this->events[$day['year']][$day['month']][$k]);
+					}
+					break;
+
+				case 'archive':
+					if ($event->getArchive()->format('Y-m-d') == $day['cd'])
+					{
+						$day['news'][] = $event;
+						unset($this->events[$day['year']][$day['month']][$k]);
+					}
+					break;
+
+				case 'crdate':
+					if ($event->getCrdate()->format('Y-m-d') == $day['cd'])
+					{
+						$day['news'][] = $event;
+						unset($this->events[$day['year']][$day['month']][$k]);
+					}
+					break;
+
+				case 'tstamp':
+					if ($event->getTstamp()->format('Y-m-d') == $day['cd'])
+					{
+						$day['news'][] = $event;
+						unset($this->events[$day['year']][$day['month']][$k]);
+					}
+					break;
+
+			}
+		}
+		
+	}
+
 
 	protected function getWeeks($demand, $month, $year) {
 		$curday = $this->firstDayOfMonth($month, $year);
@@ -102,29 +183,12 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 				$day['ts'] = $dts;
 				$day['day'] = date('j', $dts);
 				$day['month'] = date('n', $dts);
+				$day['year'] = date('Y', $dts);
+				$day['cd'] = date('Y-m-d', $dts);
 				$day['curmonth'] = $day['month'] == $month;
 				$day['curday'] = date('Ymd') == date('Ymd', $day['ts']);
-				$day['startev'] = True;
-				$day['endev'] = True;
 
-				$demand->setYear(date('Y', $dts));
-				$demand->setMonth($day['month']);
-				$demand->setDay($day['day']);
-				$day['news'] = $this->newsRepository->findDemanded($demand);
-
-				if ($this->settings['dateField'] == 'eventStartdate') {
-					$cd = date('Y-m-d', $dts);
-					foreach ($day['news'] as $event) {
-						if ($event->getEventStartdate()->format('Y-m-d') < $cd) {
-							$day['startev'] = False;
-						}
-						if ($event->getEventEnddate()) {
-							if ($event->getEventEnddate()->format('Y-m-d') > $cd) {
-								$day['endev'] = False;
-							}
-						}
-					}
-				}
+				$this->getEventsOfDay($demand, $day);
 
 				$week[] = $day;
 				$curday++;
@@ -180,7 +244,7 @@ class NewscalController extends \Tx_News_Controller_NewsController {
 				$monthsToScroll = $monthsBefore + 1 + $monthsAfter;
 				break;
 			default:
-				$monthsToScroll = (int)$this->settings['scrollMode'];
+					$monthsToScroll = (int)$this->settings['scrollMode'];
 				break;
 		}
 
