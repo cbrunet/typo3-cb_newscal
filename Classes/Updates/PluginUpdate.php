@@ -63,7 +63,7 @@ class PluginUpdate extends AbstractUpdate {
 			if (FALSE !== strpos($row['pi_flexform'], "Newscal-&gt;calendar"))
 			{
 				$ff = str_replace('Newscal-&gt;calendar', 'News-&gt;calendar', $row['pi_flexform']);
-				$ff = str_replace('eventStartdate', 'dateTime', $ff);
+				$ff = str_replace('eventStartdate', 'datetime', $ff);
 
 				$update = array(
 					'pi_flexform' => $ff
