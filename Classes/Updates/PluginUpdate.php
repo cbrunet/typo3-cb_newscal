@@ -17,7 +17,7 @@ use TYPO3\CMS\Install\Updates\AbstractUpdate;
  *
  * The TYPO3 project - inspiring people to share!
  */
-class UpdatePlugin extends AbstractUpdate {
+class PluginUpdate extends AbstractUpdate {
 
 
 	protected $title = 'EXT:cb_newscal Update plugins';
@@ -34,7 +34,7 @@ class UpdatePlugin extends AbstractUpdate {
 		$rows = $this->getDatabaseConnection()->exec_SELECTgetRows('*', 'tt_content', 'CType="list" AND list_type="news_pi1"');
 		$count = 0;
 		foreach ($rows as $row) {
-			if (FALSE !== strpos("Newscal-&gt;calendar", $row['pi_flexform']))
+			if (FALSE !== strpos($row['pi_flexform'], "Newscal-&gt;calendar"))
 			{
 				$count += 1;
 			}
@@ -60,10 +60,13 @@ class UpdatePlugin extends AbstractUpdate {
 	public function performUpdate(array &$dbQueries, &$customMessages) {
 		$rows = $this->getDatabaseConnection()->exec_SELECTgetRows('*', 'tt_content', 'CType="list" AND list_type="news_pi1"');
 		foreach ($rows as $row) {
-			if (FALSE !== strpos("Newscal-&gt;calendar", $row['pi_flexform']))
+			if (FALSE !== strpos($row['pi_flexform'], "Newscal-&gt;calendar"))
 			{
+				$ff = str_replace('Newscal-&gt;calendar', 'News-&gt;calendar', $row['pi_flexform']);
+				$ff = str_replace('eventStartdate', 'dateTime', $ff);
+
 				$update = array(
-					'pi_flexform' = str_replace('Newscal-&gt;calendar', 'News-&gt;calendar', $row['pi_flexform'])
+					'pi_flexform' => $ff
 				);
 				$this->getDatabaseConnection()->exec_UPDATEquery(
 					'tt_content',

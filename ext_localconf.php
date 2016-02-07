@@ -15,3 +15,4 @@ $GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['Hooks/BackendUtility.php']['updateFl
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['classes']['Controller/NewsController'][] = 'cb_newscal';
 
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['cb_newscal_events'] = 'Cbrunet\CbNewscal\Updates\RoqNewsevent';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['cb_newscal_plugin'] = 'Cbrunet\CbNewscal\Updates\PluginUpdate';
