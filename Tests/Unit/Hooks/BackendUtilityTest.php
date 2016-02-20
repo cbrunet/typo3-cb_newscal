@@ -2,7 +2,7 @@
 
 namespace Cbrunet\CbNewscal\Tests\Unit\Hooks;
 
-class T3libBefuncTest extends \Cbrunet\CbNewscal\Tests\Unit\UnitTestCase {
+class BackendUtilityTest extends \Cbrunet\CbNewscal\Tests\Unit\UnitTestCase {
 
 	public function setUp() {
 		$this->mockDatabase();
@@ -21,9 +21,9 @@ class T3libBefuncTest extends \Cbrunet\CbNewscal\Tests\Unit\UnitTestCase {
 	 * @test
 	 **/
 	public function updateFlexforms() {
-		$fixture = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Cbrunet\\CbNewscal\\Hooks\\T3libBefunc');
+		$fixture = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Cbrunet\\CbNewscal\\Hooks\\BackendUtility');
 		$params = array(
-			'selectedView' => 'Newscal->calendar',
+			'selectedView' => 'News->calendar',
 			'dataStructure' => $this->flexform);
 		$reference = array();
 
@@ -43,13 +43,13 @@ class T3libBefuncTest extends \Cbrunet\CbNewscal\Tests\Unit\UnitTestCase {
 		$this->assertNull($params['dataStructure']['sheets']['additional']['ROOT']['el']['settings.list.paginate.itemsPerPage']);
 		
 		$this->assertNull($params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'][0]);
-		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('roq_newsevent')) {
-			$this->assertEquals('eventStartdate', end($params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'])[1]);
-		}
-		else {
-			$this->assertEquals('crdate', end($params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'])[1]);
+		// if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('eventnews')) {
+		// 	$this->assertEquals('eventStartdate', end($params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'])[1]);
+		// }
+		// else {
+		$this->assertEquals('crdate', end($params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.dateField']['TCEforms']['config']['items'])[1]);
 
-		}
+		// }
 
 		$this->assertNotNull($params['dataStructure']['sheets']['sDEF']['ROOT']['el']['settings.displayMonth']);
 		$this->assertNotNull($params['dataStructure']['sheets']['template']['ROOT']['el']['settings.monthsBefore']);

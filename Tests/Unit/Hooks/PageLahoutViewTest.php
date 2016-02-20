@@ -2,7 +2,7 @@
 
 namespace Cbrunet\CbNewscal\Tests\Unit\Hooks;
 
-class CmsLayoutTest extends \Cbrunet\CbNewscal\Tests\Unit\UnitTestCase {
+class PageLayoutViewTest extends \Cbrunet\CbNewscal\Tests\Unit\UnitTestCase {
 
 	public function setUp() {
 		$this->mockDatabase();
@@ -11,7 +11,7 @@ class CmsLayoutTest extends \Cbrunet\CbNewscal\Tests\Unit\UnitTestCase {
 		$lang->expects($this->any())->method('sL')->willReturn('translation');
 		$GLOBALS['LANG'] = $lang;
 
-		$this->fixture = $this->getMock('\\Cbrunet\\CbNewscal\\Hooks\\CmsLayout',
+		$this->fixture = $this->getMock('\\Cbrunet\\CbNewscal\\Hooks\\PageLayoutView',
 			array('getFieldFromFlexform', 'getStartingPoint', 'getCategorySettings'));
 	}
 
@@ -73,10 +73,10 @@ class CmsLayoutTest extends \Cbrunet\CbNewscal\Tests\Unit\UnitTestCase {
 			)
 		);
 		$this->fixture->expects($this->any())->method('getFieldFromFlexform')
-			->willReturn('Newscal->calendar;dummy');
+			->willReturn('News->calendar;dummy');
 
 		$result = $this->fixture->getExtensionSummary($params);
-		$this->assertEquals('<pre>translation</pre><pre style="white-space:normal"><strong>translation</strong> Newscal-&gt;calendar;dummy<br /><strong>translation</strong> Newscal-&gt;calendar;dummy<br /><strong>translation</strong> translation<br /><strong>translation</strong> <br /></pre>', $result);
+		$this->assertEquals('<pre>translation</pre><pre style="white-space:normal"><strong>translation</strong> News-&gt;calendar;dummy<br /><strong>translation</strong> News-&gt;calendar;dummy<br /><strong>translation</strong> translation<br /><strong>translation</strong> <br /></pre>', $result);
 	}
 
 }
