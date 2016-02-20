@@ -190,6 +190,48 @@ class NewsControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	}
 
 
+
+	/**
+	 * Test two events the same day.
+	 *
+	 * @test
+	 **/
+	public function twoEventsSameDay() {
+		$settings = array(
+			'firstDayOfWeek' => 0,
+			'dateField' => 'datetime'
+		);
+
+		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('eventnews')) {
+			$event = $this->getMock('GeorgRinger\\Eventnews\\Domain\\Model\\News');
+		}
+		else
+		{
+			$event = $this->getMock('GeorgRinger\\News\\Domain\\Model\\News');
+		}
+
+		$event->method('getDatetime')->willReturn(new \DateTime('2014-12-24'));
+		$event->method('getEventEnd')->willReturn(new \DateTime('2014-12-24'));
+
+		$configurationManager = $this->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
+		$configurationManager->method('getConfiguration')->willReturn($settings);
+
+		$newsRepository = $this->getMockBuilder('\\GeorgRinger\\News\\Domain\\Repository\\NewsRepository')
+			->disableOriginalConstructor()
+            ->getMock();
+        $newsRepository->method('findDemanded')->willReturn(array($event, $event));
+
+		$mockedController = $this->getAccessibleMock('\\Cbrunet\\CbNewscal\\Controller\\NewsController', array('dummy'));
+		$mockedController->injectConfigurationManager($configurationManager);
+		$mockedController->injectNewsRepository($newsRepository);
+
+		$demand = $this->getMock('GeorgRinger\\News\\Domain\\Model\\Dto\\AdministrationDemand');
+		$demand->method('getDateField')->willReturn("datetime");
+		$weeks = $mockedController->_call('getWeeks', $demand, 12, 2014);
+
+		$this->assertEquals(2, sizeof($weeks[3][3]['news']));
+	}
+
 	/**
 	 * Test calculation of the fist day of the monthly calendar
 	 *

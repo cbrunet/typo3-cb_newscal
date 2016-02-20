@@ -113,20 +113,19 @@ class NewsController extends \GeorgRinger\News\Controller\NewsController {
         				if ($event->getEventEnd())
         				{
         					if ($event->getDatetime()->format('Y-m-d') <= $day['cd'] &&
-        						$event->getEventend()->format('Y-m-d') >= $day['cd'] )
+        						$event->getEventEnd()->format('Y-m-d') >= $day['cd'] )
         					{
         						$day['news'][] = $event;
         						if ($event->getDatetime()->format('Y-m-d') < $day['cd'])
         						{
         							$day['startev'] = False;
         						}
-        						if ($event->getEventend()->format('Y-m-d') > $day['cd'])
+        						if ($event->getEventEnd()->format('Y-m-d') > $day['cd'])
         						{
         							$day['endev'] = False;
         						}
         						else
         						{
-									unset($this->events[$day['year']][$day['month']][$k]);
         						}
         					}
         					continue 2;  // next loop iteration
@@ -137,7 +136,6 @@ class NewsController extends \GeorgRinger\News\Controller\NewsController {
 					if ($event->getDatetime()->format('Y-m-d') == $day['cd'])
 					{
 						$day['news'][] = $event;
-						unset($this->events[$day['year']][$day['month']][$k]);
 					}
 					break;
 
@@ -145,7 +143,6 @@ class NewsController extends \GeorgRinger\News\Controller\NewsController {
 					if ($event->getArchive()->format('Y-m-d') == $day['cd'])
 					{
 						$day['news'][] = $event;
-						unset($this->events[$day['year']][$day['month']][$k]);
 					}
 					break;
 
@@ -153,7 +150,6 @@ class NewsController extends \GeorgRinger\News\Controller\NewsController {
 					if ($event->getCrdate()->format('Y-m-d') == $day['cd'])
 					{
 						$day['news'][] = $event;
-						unset($this->events[$day['year']][$day['month']][$k]);
 					}
 					break;
 
@@ -161,7 +157,6 @@ class NewsController extends \GeorgRinger\News\Controller\NewsController {
 					if ($event->getTstamp()->format('Y-m-d') == $day['cd'])
 					{
 						$day['news'][] = $event;
-						unset($this->events[$day['year']][$day['month']][$k]);
 					}
 					break;
 
