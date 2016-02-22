@@ -23,24 +23,24 @@ class NewscalControllerEventTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCas
 	 */
 	protected $testExtensionsToLoad = array(
 		'typo3conf/ext/news',
-		'typo3conf/ext/roq_newsevent',
+		'typo3conf/ext/eventnews',
 		'typo3conf/ext/cb_newscal',
 	);
 
 	public function setUp() {
 		parent::setUp();
 
-		$this->importDataSet(__DIR__ . '/../Fixtures/news.xml');
+		// $this->importDataSet(__DIR__ . '/../Fixtures/news.xml');
 		$this->importDataSet(__DIR__ . '/../Fixtures/events.xml');
 		$this->importDataSet(\TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName('EXT:core/Tests/Functional/Fixtures/pages.xml'));
 		
-		$rnesetup = 'EXT:roq_newsevent/Configuration/TypoScript/setup.txt';
+		$rnesetup = 'EXT:eventnews/Configuration/TypoScript/setup.txt';
 		$this->setUpFrontendRootPage(1, array($rnesetup));
 		
 		$this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-		$this->newsRepository = $this->objectManager->get('Tx_News_Domain_Repository_NewsRepository');
+		$this->newsRepository = $this->objectManager->get('\\GeorgRinger\\News\\Domain\\Repository\\NewsRepository');
 		$this->configurationManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
-		$this->controller = $this->getAccessibleMock('Cbrunet\\CbNewscal\\Controller\\NewscalController', array("dummy"));
+		$this->controller = $this->getAccessibleMock('Cbrunet\\CbNewscal\\Controller\\NewsController', array("dummy"));
 		$this->controller->injectObjectManager($this->objectManager);
 		$this->controller->injectConfigurationManager($this->configurationManager);
 		$this->controller->injectNewsRepository($this->newsRepository);
@@ -107,7 +107,8 @@ class NewscalControllerEventTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCas
 				array(
 					'displayMonth' => '2015-02',
 					'firstDayOfWeek' => 0,
-					'dateField' => 'eventStartdate',
+					'dateField' => 'datetime',
+					'eventRestriction' => '1'
 				),
 				array(
 					0 => array(

@@ -29,9 +29,9 @@ class NewscalControllerTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-		$this->newsRepository = $this->objectManager->get('Tx_News_Domain_Repository_NewsRepository');
+		$this->newsRepository = $this->objectManager->get('\\GeorgRinger\\News\\Domain\\Repository\\NewsRepository');
 		$this->configurationManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
-		$this->controller = $this->getAccessibleMock('Cbrunet\\CbNewscal\\Controller\\NewscalController', array("dummy"));
+		$this->controller = $this->getAccessibleMock('Cbrunet\\CbNewscal\\Controller\\NewsController', array("dummy"));
 		$this->controller->injectObjectManager($this->objectManager);
 		$this->controller->injectConfigurationManager($this->configurationManager);
 		$this->controller->injectNewsRepository($this->newsRepository);
