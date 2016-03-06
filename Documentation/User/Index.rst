@@ -79,27 +79,15 @@ next or previous month, the displayed month and year will be reflected in the pa
    the news, whether they belong to the displayed calendar or not.
 
 
-Using roq_newsevent
+Using eventnews_
 -------------------
 
-If you use roq_newsevent_ extension, cb_newscal can use the event date fields. It can also display events
-that span multiple days. The only configuration you need to do, beside installing roq_newsevent_ and
-loading proper TypoScript setup, is to specify *Event dates* as the date field to use in the plugin
-configuration. This option is available only if roq_newsevent_ extension is installed.
+If you use eventnews_ extension, cb_newscal can use the event date fields. It can also display events
+that span multiple days. The only thing you need is to install eventnews_ and
+to load proper TypoScript setup. Multiple days spaning is available only if eventnews_ extension is installed.
 
-
-.. figure:: ../Images/Newsevent.png
-   :width: 510px
-   :alt: Using roq_newsevent
-
-   Using events from roq_newsevent.
-
-.. important::
-
-    At the time of writing, the compatibility of roq_newsevent with TYPO3 7.0 was not confirmed.
-    However, it works with TYPO3 6.2.
 
 
 .. _news: http://typo3.org/extensions/repository/view/news
 .. _manual of news extension: http://docs.typo3.org/typo3cms/extensions/news/latest/Main/Configuration/Plugin/Index.html
-.. _roq_newsevent: http://typo3.org/extensions/repository/view/roq_newsevent
+.. _eventnews: http://typo3.org/extensions/repository/view/eventnews

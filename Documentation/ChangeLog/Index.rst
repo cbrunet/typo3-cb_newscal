@@ -11,8 +11,12 @@
 ChangeLog
 =========
 
+2.0.0: 2016-03-05
+  - Compatibility with news_ version 3.2 and above [`issue 10`_]
+  - Droped support for roq_newsevent_. Replaced by eventnews_.
+
 1.2.1: 2015-04-28
-  - Verified compatibility with row_newsevent_ 3.1.0
+  - Verified compatibility with roq_newsevent_ 3.1.0
   - Upgraded language files for Catalan and Castillan
 
 1.2.0: 2015-02-27
@@ -45,9 +49,11 @@ ChangeLog
 .. _issue 5: https://github.com/cbrunet/typo3-cb_newscal/issues/5
 .. _issue 6: https://github.com/cbrunet/typo3-cb_newscal/issues/6
 .. _issue 7: https://github.com/cbrunet/typo3-cb_newscal/issues/7
+.. _issue 10: https://github.com/cbrunet/typo3-cb_newscal/issues/10
 
 .. _news: http://typo3.org/extensions/repository/view/news
 .. _roq_newsevent: http://typo3.org/extensions/repository/view/roq_newsevent
+.. _eventnews: http://typo3.org/extensions/repository/view/eventnews
 
 
 Acknowledgments
@@ -55,5 +61,5 @@ Acknowledgments
 
 - Special thanks to **Jaume Presas i Puig**, who gave me a lot of good suggestions for
   improving the extension, and who tested it before the release of 1.1.0. He also provided me
-  some translation files, and soem sample styles for the calendar.
+  some translation files, and some sample styles for the calendar.
   

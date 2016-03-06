@@ -59,4 +59,3 @@ Calendar for news
 	Administrator/Index
 	KnownProblems/Index
 	ChangeLog/Index
-	Targets
